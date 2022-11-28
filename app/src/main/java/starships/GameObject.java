@@ -10,14 +10,14 @@ public class GameObject {
 
     private final Vector position;
     private final Vector direction;
-    private final Vector speed;
+    private final int speed;
     private final int rotationDegrees;
 
     private final int damage;
     private final int health;
     private final boolean isVisible;
 
-    public GameObject(String id, ObjectType type, ObjectStyle style, ObjectShape shape, ObjectSize size, Vector position, Vector direction, Vector speed, int rotationDegrees, int damage, int health, boolean isVisible) {
+    public GameObject(String id, ObjectType type, ObjectStyle style, ObjectShape shape, ObjectSize size, Vector position, Vector direction, int speed, int rotationDegrees, int damage, int health, boolean isVisible) {
         this.id = id;
         this.type = type;
         this.style = style;
@@ -32,8 +32,12 @@ public class GameObject {
         this.isVisible = isVisible;
     }
 
-    public GameObject changePosDirRot(Vector position, Vector direction, int rotationDegrees){
+    public GameObject changeDirSpd(Vector direction, int speed){
         return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
+    }
+
+    public GameObject changePosDirRot(Vector position, Vector direction, int rotationDegrees){
+        return new GameObject(id, type, style, shape, size, position, direction, 0, rotationDegrees, damage, health, isVisible);
     }
 
     public void reduceHealth(int amount){
@@ -72,7 +76,7 @@ public class GameObject {
         return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
     }
 
-    public GameObject setSpeed(Vector speed){
+    public GameObject setSpeed(int speed){
         return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
     }
 
@@ -120,7 +124,7 @@ public class GameObject {
         return direction;
     }
 
-    public Vector getSpeed() {
+    public int getSpeed() {
         return speed;
     }
 
