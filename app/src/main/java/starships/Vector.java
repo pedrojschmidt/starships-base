@@ -14,6 +14,14 @@ public class Vector {
         return new Vector(x + vector.getX(), y + vector.getY());
     }
 
+    public Vector setX(int x){
+        return new Vector(x, y);
+    }
+
+    public Vector setY(int y){
+        return new Vector(x, y);
+    }
+
     public int getX() {
         return x;
     }
