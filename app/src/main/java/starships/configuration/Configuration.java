@@ -15,6 +15,7 @@ public class Configuration {
 
     private final int amountOfPlayers;
     private final int livesPerPlayer;
+    private final int amountOfAsteroids;
     private final Map<String, KeyCode> keyboardConfiguration;
     private final Map<String, ObjectStyle> styles;
 
@@ -23,7 +24,8 @@ public class Configuration {
         Map<String, String> optionsMap = generateMap(lines);
 
         amountOfPlayers = Integer.parseInt(optionsMap.get("amountOfPlayers"));
-        livesPerPlayer = Integer.parseInt(optionsMap.get("amountOfLives"));
+        livesPerPlayer = Integer.parseInt(optionsMap.get("livesPerPlayer"));
+        amountOfAsteroids = Integer.parseInt(optionsMap.get("amountOfAsteroids"));
         keyboardConfiguration = getKeyBoardMap(optionsMap.get("keyBoardSettings"));
         styles = getStyles(optionsMap.get("styles"));
     }
@@ -103,6 +105,10 @@ public class Configuration {
 
     public int getLivesPerPlayer() {
         return livesPerPlayer;
+    }
+
+    public int getAmountOfAsteroids() {
+        return amountOfAsteroids;
     }
 
     public Map<String, KeyCode> getKeyboardConfiguration() {
