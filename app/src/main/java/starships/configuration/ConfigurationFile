@@ -1,0 +1,5 @@
+amountOfPlayers:2
+livesPerPlayer:5
+keyBoardSettings1:forward-1=W;backwards-1=S;left-1=A;right-1=D;shoot-1=SPACE;rotate-left-1=Q;rotate-right-1=E
+keyBoardSettings2:forward-2=U;backwards-2=J;left-2=H;right-2=K;shoot-2=ENTER;rotate-left-2=Y;rotate-right-2=I
+styles:style-1=SPACESHIP1;style-2=SPACESHIP2
