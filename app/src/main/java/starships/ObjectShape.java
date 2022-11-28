@@ -1,4 +1,7 @@
 package starships;
 
-public class ObjectShape {
+public enum ObjectShape {
+    TRIANGULAR,
+    RECTANGULAR,
+    CIRCULAR
 }
