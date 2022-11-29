@@ -7,7 +7,5 @@ public enum ObjectStyle {
     ASTEROID1,
     ASTEROID2,
     ASTEROID3,
-    BULLET1,
-    BULLET2,
-    BULLET3
+    BULLET
 }

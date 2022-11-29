@@ -19,24 +19,32 @@ public class Game {
     private boolean isPaused;
 
     public Game() {
-        this.configuration = new Configuration(amountOfAsteroids);
+        configuration = new Configuration();
     }
 
-    private void loadNewGame(){
+    private void newGame(){
         createPlayers();
-        createAsteroids(30);
-        generateObjects(10, 20, players.size(), players, gameConfiguration);
+        createAsteroids();
+        fillObjects();
     }
 
-    public void resume(){
-        loadNewGame();
+    private void fillObjects(){
+        for (Player player: players) {
+            objects.add(player.getSpaceship());
+        }
+        objects.addAll(asteroids);
+        objects.addAll(bullets);
+    }
+
+    public void start(){
+        newGame();
         this.isPaused = false;
     }
 
     public void createPlayers(){
         int amount = configuration.getAmountOfPlayers();
         for (int i = 0; i < amount; i++) {
-            Spaceship spaceship = new Spaceship("spaceship-" + i, configuration.getStyles().get("style-" + i), new ObjectSize(20, 20), new Vector(300, 300), new Vector(0, 1), 0, 180, 20, 100, true, 1000, 1);
+            Spaceship spaceship = new Spaceship("spaceship-" + i, configuration.getStyles().get("style-" + i), new ObjectSize(20, 20), new Vector(300, 300), new Vector(0, 1), 0, 180, 20, 100, true, 1000, 1, 0);
             players.add(new Player("player-" + i, 0, configuration.getLivesPerPlayer(), spaceship, true));
         }
     }
@@ -44,7 +52,31 @@ public class Game {
     public void createAsteroids(){
         int amount = configuration.getAmountOfAsteroids();
         for (int i = 0; i < amount; i++) {
-            asteroids.add(new Asteroid("asteroid-" + i, ))
+            asteroids.add(new Asteroid("asteroid-" + i, ObjectStyle.ASTEROID1, new ObjectSize(30, 30), new Vector(0, 800), new Vector(1, -1), 0, 180, 20, 100, true, 1000));
         }
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public List<Asteroid> getAsteroids() {
+        return asteroids;
+    }
+
+    public List<Bullet> getBullets() {
+        return bullets;
+    }
+
+    public List<GameObject> getObjects() {
+        return objects;
+    }
+
+    public Configuration getConfiguration() {
+        return configuration;
+    }
+
+    public boolean isPaused() {
+        return isPaused;
     }
 }

@@ -2,11 +2,19 @@ package starships;
 
 public class ObjectSize {
 
-    private final int height;
-    private final int width;
+    private final double height;
+    private final double width;
 
-    public ObjectSize(int height, int width) {
+    public ObjectSize(double height, double width) {
         this.height = height;
         this.width = width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public double getWidth() {
+        return width;
     }
 }

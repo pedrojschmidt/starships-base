@@ -1,12 +1,14 @@
 package edu.austral.ingsis.starships
 
 import edu.austral.ingsis.starships.ui.*
+import edu.austral.ingsis.starships.ui.Collision
 import edu.austral.ingsis.starships.ui.ElementColliderType.*
 import javafx.application.Application
 import javafx.application.Application.launch
 import javafx.scene.Scene
 import javafx.scene.input.KeyCode
 import javafx.stage.Stage
+import starships.*
 
 fun main() {
     launch(Starships::class.java)
@@ -18,23 +20,26 @@ class Starships() : Application() {
     private val keyTracker = KeyTracker()
 
     companion object {
-        val STARSHIP_IMAGE_REF = ImageRef("starship", 70.0, 70.0)
+        val SPACESHIP1 = ImageRef("spaceship1", 70.0, 70.0)
+        val SPACESHIP2 = ImageRef("spaceship2", 70.0, 70.0)
+        val SPACESHIP3 = ImageRef("spaceship3", 70.0, 70.0)
+        val BULLET = ImageRef("bullet", 70.0, 70.0)
+        val ASTEROID1 = ImageRef("asteroid", 70.0, 70.0)
+        val ASTEROID2 = ImageRef("asteroid", 80.0, 80.0)
+        val ASTEROID3 = ImageRef("asteroid", 90.0, 90.0)
+        val game = Game()
     }
 
     override fun start(primaryStage: Stage) {
-        facade.elements["asteroid-1"] =
-            ElementModel("asteroid-1", 0.0, 0.0, 30.0, 40.0, 0.0, Elliptical, null)
-        facade.elements["asteroid-2"] =
-            ElementModel("asteroid-2", 100.0, 100.0, 30.0, 20.0, 90.0, Rectangular, null)
-        facade.elements["asteroid-3"] =
-            ElementModel("asteroid-3", 200.0, 200.0, 20.0, 30.0, 180.0, Elliptical, null)
+        game.start()
+        val objects = game.objects
+        for(gameObject in objects){
+            facade.elements[gameObject.id] = ElementModel(gameObject.id, gameObject.position.x, gameObject.position.y, gameObject.size.height, gameObject.size.width, gameObject.rotationDegrees, convertShape(gameObject.shape), convertImage(gameObject))
+        }
 
-        val starship = ElementModel("starship", 300.0, 300.0, 40.0, 40.0, 270.0, Triangular, STARSHIP_IMAGE_REF)
-        facade.elements["starship"] = starship
-
-        facade.timeListenable.addEventListener(TimeListener(facade.elements))
-        facade.collisionsListenable.addEventListener(CollisionListener())
-        keyTracker.keyPressedListenable.addEventListener(KeyPressedListener(starship))
+        facade.timeListenable.addEventListener(TimeListener(facade.elements, game))
+        facade.collisionsListenable.addEventListener(CollisionListener(game))
+        keyTracker.keyPressedListenable.addEventListener(KeyPressedListener(game))
 
         val scene = Scene(facade.view)
         keyTracker.scene = scene
@@ -52,9 +57,27 @@ class Starships() : Application() {
         facade.stop()
         keyTracker.stop()
     }
+
+    fun convertShape(shape: ObjectShape) : ElementColliderType {
+        return when (shape) {
+            ObjectShape.CIRCULAR -> Elliptical
+            ObjectShape.RECTANGULAR -> Rectangular
+            ObjectShape.TRIANGULAR -> Triangular
+        }
+    }
+
+    fun convertImage(gameObject: GameObject) : ImageRef? {
+        return if (gameObject.style == ObjectStyle.SPACESHIP1) SPACESHIP1
+        else if(gameObject.style == ObjectStyle.SPACESHIP2) SPACESHIP2
+        else if (gameObject.style == ObjectStyle.SPACESHIP3) SPACESHIP3
+        else if (gameObject.style == ObjectStyle.ASTEROID1) ASTEROID1
+        else if (gameObject.style == ObjectStyle.ASTEROID2) ASTEROID2
+        else if (gameObject.style == ObjectStyle.ASTEROID3) ASTEROID3
+        else BULLET
+    }
 }
 
-class TimeListener(private val elements: Map<String, ElementModel>) : EventListener<TimePassed> {
+class TimeListener(private val elements: Map<String, ElementModel>, private val game: Game) : EventListener<TimePassed> {
     override fun handle(event: TimePassed) {
         elements.forEach {
             val (key, element) = it

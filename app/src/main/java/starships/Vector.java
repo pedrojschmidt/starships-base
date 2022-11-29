@@ -2,10 +2,10 @@ package starships;
 
 public class Vector {
 
-    private final int x;
-    private final int y;
+    private final double x;
+    private final double y;
 
-    public Vector(int x, int y) {
+    public Vector(double x, double y) {
         this.x = x;
         this.y = y;
     }
@@ -14,19 +14,19 @@ public class Vector {
         return new Vector(x + vector.getX(), y + vector.getY());
     }
 
-    public Vector setX(int x){
+    public Vector setX(double x){
         return new Vector(x, y);
     }
 
-    public Vector setY(int y){
+    public Vector setY(double y){
         return new Vector(x, y);
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 }

@@ -10,14 +10,14 @@ public class GameObject {
 
     private final Vector position;
     private final Vector direction;
-    private final int speed;
-    private final int rotationDegrees;
+    private final double speed;
+    private final double rotationDegrees;
 
-    private final int damage;
-    private final int health;
+    private final double damage;
+    private final double health;
     private final boolean isVisible;
 
-    public GameObject(String id, ObjectType type, ObjectStyle style, ObjectShape shape, ObjectSize size, Vector position, Vector direction, int speed, int rotationDegrees, int damage, int health, boolean isVisible) {
+    public GameObject(String id, ObjectType type, ObjectStyle style, ObjectShape shape, ObjectSize size, Vector position, Vector direction, double speed, double rotationDegrees, double damage, double health, boolean isVisible) {
         this.id = id;
         this.type = type;
         this.style = style;
@@ -76,19 +76,19 @@ public class GameObject {
         return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
     }
 
-    public GameObject setSpeed(int speed){
+    public GameObject setSpeed(double speed){
         return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
     }
 
-    public GameObject setRotation(int rotationDegrees){
+    public GameObject setRotation(double rotationDegrees){
         return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
     }
 
-    public GameObject setDamage(int damage){
+    public GameObject setDamage(double damage){
         return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
     }
 
-    public GameObject setHealth(int health){
+    public GameObject setHealth(double health){
         return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
     }
 
@@ -124,19 +124,19 @@ public class GameObject {
         return direction;
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
-    public int getRotationDegrees() {
+    public double getRotationDegrees() {
         return rotationDegrees;
     }
 
-    public int getDamage() {
+    public double getDamage() {
         return damage;
     }
 
-    public int getHealth() {
+    public double getHealth() {
         return health;
     }
 
