@@ -4,8 +4,11 @@ import starships.*;
 
 public class Bullet extends GameObject {
 
-    public Bullet(String id, ObjectStyle style, ObjectSize size, Vector position, Vector direction, double speed, double rotationDegrees, double damage, boolean isVisible) {
+    private String spaceshipId;
+
+    public Bullet(String id, ObjectStyle style, ObjectSize size, Vector position, Vector direction, double speed, double rotationDegrees, double damage, boolean isVisible, String spaceshipId) {
         super(id, ObjectType.BULLET, style, ObjectShape.RECTANGULAR, size, position, direction, speed, rotationDegrees, damage, 1, isVisible);
+        this.spaceshipId = spaceshipId;
     }
 
     @Override
@@ -31,6 +34,6 @@ public class Bullet extends GameObject {
     }
 
     public void removeHealth(){
-        super.setHealth(0);
+        super.setInitialHealth(0);
     }
 }

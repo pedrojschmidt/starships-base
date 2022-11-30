@@ -13,11 +13,12 @@ public class GameObject {
     private double speed;
     private double rotationDegrees;
     private boolean isVisible;
+    private double actualHealth;
 
     private final double damage;
-    private final double health;
+    private final double initialHealth;
 
-    public GameObject(String id, ObjectType type, ObjectStyle style, ObjectShape shape, ObjectSize size, Vector position, Vector direction, double speed, double rotationDegrees, double damage, double health, boolean isVisible) {
+    public GameObject(String id, ObjectType type, ObjectStyle style, ObjectShape shape, ObjectSize size, Vector position, Vector direction, double speed, double rotationDegrees, double damage, double initialHealth, boolean isVisible) {
         this.id = id;
         this.type = type;
         this.style = style;
@@ -28,7 +29,8 @@ public class GameObject {
         this.speed = speed;
         this.rotationDegrees = rotationDegrees;
         this.damage = damage;
-        this.health = health;
+        this.actualHealth = initialHealth;
+        this.initialHealth = initialHealth;
         this.isVisible = isVisible;
     }
 
@@ -40,8 +42,11 @@ public class GameObject {
         return new Double[]{position.getX(), position.getY(), rotationDegrees, size.getHeight(), size.getWidth()};
     }
 
-    public void reduceHealth(int amount){
-        setHealth(health-amount);
+    public void reduceHealth(double amount){
+        setActualHealth(actualHealth -amount);
+        if (actualHealth <= 0) {
+            setVisible(false);
+        }
     }
 
     public boolean isInBounds(){
@@ -49,31 +54,35 @@ public class GameObject {
     }
 
     public GameObject setId(String id){
-        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
+        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, initialHealth, isVisible);
     }
 
     public GameObject setType(ObjectType type){
-        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
+        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, initialHealth, isVisible);
     }
 
     public GameObject setStyle(ObjectStyle style){
-        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
+        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, initialHealth, isVisible);
     }
 
     public GameObject setShape(ObjectShape shape){
-        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
+        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, initialHealth, isVisible);
     }
 
     public GameObject setSize(ObjectSize size){
-        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
+        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, initialHealth, isVisible);
     }
 
     public GameObject setDamage(double damage){
-        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
+        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, initialHealth, isVisible);
     }
 
-    public GameObject setHealth(double health){
-        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
+    public void setActualHealth(double actualHealth) {
+        this.actualHealth = actualHealth;
+    }
+
+    public GameObject setInitialHealth(double initialHealth){
+        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, initialHealth, isVisible);
     }
 
     public void setPosition(Vector position) {
@@ -136,8 +145,12 @@ public class GameObject {
         return damage;
     }
 
-    public double getHealth() {
-        return health;
+    public double getActualHealth() {
+        return actualHealth;
+    }
+
+    public double getInitialHealth() {
+        return initialHealth;
     }
 
     public boolean isVisible() {

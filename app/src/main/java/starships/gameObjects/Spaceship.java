@@ -27,20 +27,27 @@ public class Spaceship extends GameObject {
         }
     }
 
+    public void resetPosDirRotSpd(){
+        setPosition(new Vector(300, 300));
+        setDirection(new Vector(0, 1));
+        setRotationDegrees(180);
+        setSpeed(0);
+    }
+
     public Spaceship move(Vector direction, int speed){
-        return new Spaceship(getId(), getStyle(), getSize(), getPosition(), direction, speed, getRotationDegrees(), getDamage(), getHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired);
+        return new Spaceship(getId(), getStyle(), getSize(), getPosition(), direction, speed, getRotationDegrees(), getDamage(), getInitialHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired);
     }
 
     public Bullet shoot(){
-        return new Bullet(getId() + shotsFired, ObjectStyle.BULLET, new ObjectSize(10, 5), getPosition(), getDirection(), 10, getRotationDegrees(), 5, true);
+        return new Bullet(getId() + shotsFired, ObjectStyle.BULLET, new ObjectSize(10, 5), getPosition(), getDirection(), 10, getRotationDegrees(), 5, true, getId());
     }
 
     public Spaceship rotate(int rotationDegrees){
-        return new Spaceship(getId(), getStyle(), getSize(), getPosition(), getDirection(), getSpeed(), rotationDegrees, getDamage(), getHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired);
+        return new Spaceship(getId(), getStyle(), getSize(), getPosition(), getDirection(), getSpeed(), rotationDegrees, getDamage(), getInitialHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired);
     }
 
     public Spaceship resetPosition(){
-        return new Spaceship(getId(), getStyle(), getSize(), new Vector(300, 300), new Vector(0, 1), 0, 180, getDamage(), getHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired);
+        return new Spaceship(getId(), getStyle(), getSize(), new Vector(300, 300), new Vector(0, 1), 0, 180, getDamage(), getInitialHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired);
     }
 
     public int getPointsWhenDestroyed() {

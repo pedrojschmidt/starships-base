@@ -42,13 +42,27 @@ public class Game {
         this.isPaused = false;
     }
 
+    public void reset(){
+        newGame();
+    }
+
     public void update(){
         if (!isPaused){
-            MeteorGenerator.manageMeteorGeneration(gameObjects);
+            AsteroidGenerator.generateAsteroids(objects, players);
             for (GameObject gameObject : objects){
                 gameObject.update();
             }
         }
+    }
+
+    public void showResults(){
+        System.out.println("------------------------- RESULTADOS -------------------------");
+        for (Player player: players) {
+            System.out.println("");
+            System.out.println("Jugador: " + player.getId() + " obtuvo " + player.getPoints() + " puntos");
+            System.out.println("");
+        }
+        System.out.println("--------------------------------------------------------------");
     }
 
     public void createPlayers(){
@@ -63,6 +77,18 @@ public class Game {
         int amount = configuration.getAmountOfAsteroids();
         for (int i = 0; i < amount; i++) {
             asteroids.add(new Asteroid("asteroid-" + i, ObjectStyle.ASTEROID1, new ObjectSize(30, 30), new Vector(0, 800), new Vector(1, -1), 0, 180, 20, 100, true, 1000));
+        }
+    }
+
+    public void makeCollision(String id1, String id2){
+        GameObject object1 = null;
+        GameObject object2 = null;
+        for (GameObject gameObject : objects){
+            if (gameObject.getId().equals(id1)) object1 = gameObject;
+            if (gameObject.getId().equals(id2)) object2 = gameObject;
+        }
+        if (object1 != null && object2 != null && object1.isVisible() && object2.isVisible()){
+            Collision collision = new Collision(object1, object2, objects, players, objects1, players1);
         }
     }
 

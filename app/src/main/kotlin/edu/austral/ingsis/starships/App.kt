@@ -80,10 +80,10 @@ class Starships() : Application() {
 class TimeListener(private val elements: Map<String, ElementModel>, private val game: Game) : EventListener<TimePassed> {
     override fun handle(event: TimePassed) {
         if (game.isOver) {
-            game.showResults
-            game.reset
+            game.showResults()
+            game.reset()
         }
-        game.update
+        game.update()
         val objects = game.objects
         for (gameObject in objects) {
             val element = elements.get(gameObject.id)
@@ -101,7 +101,7 @@ class TimeListener(private val elements: Map<String, ElementModel>, private val 
 
 class CollisionListener(private val game: Game) : EventListener<Collision> {
     override fun handle(event: Collision) {
-        println("${event.element1Id} ${event.element2Id}")
+        game.makeCollision(event.element1Id, event.element2Id)
     }
 
 }
