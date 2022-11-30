@@ -16,35 +16,31 @@ public class Spaceship extends GameObject {
     }
 
     @Override
-    public GameObject update() {
-//        if (getSpeed() > 0){
-//            double newX = getPosition().getX() -  1.5 * Math.sin(Math.PI * 2 * getDirection() / 360);
-//            double newY = getPosition().getY() +  1.5 * Math.cos(Math.PI * 2 * getDirection() / 360);
-//            if (!isInsideLimit(newX, newY)){
-//                this.boost = 0;
-//            }
-//            else{
-//                setPosition(new Vector())
-//                this.boost -= 5;
-//            }
-//        }
-        return null;
+    public void update() {
+        if (getSpeed() > 0){
+            double newX = getPosition().getX() +  getSpeed() * getDirection().getX();
+            double newY = getPosition().getY() +  getSpeed() * getDirection().getY();
+            //Solo se mueve dentro de la pantalla
+            if (isInBounds()){
+                setPosition(new Vector(newX, newY));
+            }
+        }
     }
 
     public Spaceship move(Vector direction, int speed){
-        return new Spaceship(super.getId(), super.getStyle(), super.getSize(), super.getPosition(), direction, speed, super.getRotationDegrees(), super.getDamage(), super.getHealth(), super.isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired);
+        return new Spaceship(getId(), getStyle(), getSize(), getPosition(), direction, speed, getRotationDegrees(), getDamage(), getHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired);
     }
 
     public Bullet shoot(){
-        return new Bullet(super.getId() + shotsFired, ObjectStyle.BULLET, new ObjectSize(10, 5), super.getPosition(), super.getDirection(), 10, super.getRotationDegrees(), 5, true);
+        return new Bullet(getId() + shotsFired, ObjectStyle.BULLET, new ObjectSize(10, 5), getPosition(), getDirection(), 10, getRotationDegrees(), 5, true);
     }
 
     public Spaceship rotate(int rotationDegrees){
-        return new Spaceship(super.getId(), super.getStyle(), super.getSize(), super.getPosition(), super.getDirection(), super.getSpeed(), rotationDegrees, super.getDamage(), super.getHealth(), super.isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired);
+        return new Spaceship(getId(), getStyle(), getSize(), getPosition(), getDirection(), getSpeed(), rotationDegrees, getDamage(), getHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired);
     }
 
     public Spaceship resetPosition(){
-        return new Spaceship(super.getId(), super.getStyle(), super.getSize(), new Vector(300, 300), new Vector(0, 1), 0, 180, super.getDamage(), super.getHealth(), super.isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired);
+        return new Spaceship(getId(), getStyle(), getSize(), new Vector(300, 300), new Vector(0, 1), 0, 180, getDamage(), getHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired);
     }
 
     public int getPointsWhenDestroyed() {

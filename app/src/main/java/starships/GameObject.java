@@ -8,14 +8,14 @@ public class GameObject {
     private final ObjectShape shape;
     private final ObjectSize size;
 
-    private final Vector position;
-    private final Vector direction;
-    private final double speed;
-    private final double rotationDegrees;
+    private Vector position;
+    private Vector direction;
+    private double speed;
+    private double rotationDegrees;
+    private boolean isVisible;
 
     private final double damage;
     private final double health;
-    private final boolean isVisible;
 
     public GameObject(String id, ObjectType type, ObjectStyle style, ObjectShape shape, ObjectSize size, Vector position, Vector direction, double speed, double rotationDegrees, double damage, double health, boolean isVisible) {
         this.id = id;
@@ -32,16 +32,8 @@ public class GameObject {
         this.isVisible = isVisible;
     }
 
-    public GameObject update() {
-        return null;
-    }
+    public void update() {
 
-    public GameObject changeDirSpd(Vector direction, int speed){
-        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
-    }
-
-    public GameObject changePosDirRot(Vector position, Vector direction, int rotationDegrees){
-        return new GameObject(id, type, style, shape, size, position, direction, 0, rotationDegrees, damage, health, isVisible);
     }
 
     public Double[] getPosRotSz(){
@@ -76,22 +68,6 @@ public class GameObject {
         return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
     }
 
-    public GameObject setPosition(Vector position){
-        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
-    }
-
-    public GameObject setDirection(Vector direction){
-        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
-    }
-
-    public GameObject setSpeed(double speed){
-        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
-    }
-
-    public GameObject setRotation(double rotationDegrees){
-        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
-    }
-
     public GameObject setDamage(double damage){
         return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
     }
@@ -100,8 +76,24 @@ public class GameObject {
         return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
     }
 
-    public GameObject setIsInBounds(boolean isInBounds){
-        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isInBounds);
+    public void setPosition(Vector position) {
+        this.position = position;
+    }
+
+    public void setDirection(Vector direction) {
+        this.direction = direction;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public void setRotationDegrees(double rotationDegrees) {
+        this.rotationDegrees = rotationDegrees;
+    }
+
+    public void setVisible(boolean visible) {
+        isVisible = visible;
     }
 
     public String getId() {
