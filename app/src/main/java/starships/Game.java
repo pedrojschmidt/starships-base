@@ -17,6 +17,7 @@ public class Game {
     private Configuration configuration;
 
     private boolean isPaused;
+    private boolean isOver;
 
     public Game() {
         configuration = new Configuration();
@@ -39,6 +40,15 @@ public class Game {
     public void start(){
         newGame();
         this.isPaused = false;
+    }
+
+    public void update(){
+        if (!isPaused){
+            MeteorGenerator.manageMeteorGeneration(gameObjects);
+            for (GameObject gameObject : objects){
+                gameObject.update();
+            }
+        }
     }
 
     public void createPlayers(){
@@ -78,5 +88,9 @@ public class Game {
 
     public boolean isPaused() {
         return isPaused;
+    }
+
+    public boolean isOver() {
+        return isOver;
     }
 }

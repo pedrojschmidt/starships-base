@@ -15,6 +15,22 @@ public class Spaceship extends GameObject {
         this.shotsFired = shotsFired;
     }
 
+    @Override
+    public GameObject update() {
+//        if (getSpeed() > 0){
+//            double newX = getPosition().getX() -  1.5 * Math.sin(Math.PI * 2 * getDirection() / 360);
+//            double newY = getPosition().getY() +  1.5 * Math.cos(Math.PI * 2 * getDirection() / 360);
+//            if (!isInsideLimit(newX, newY)){
+//                this.boost = 0;
+//            }
+//            else{
+//                setPosition(new Vector())
+//                this.boost -= 5;
+//            }
+//        }
+        return null;
+    }
+
     public Spaceship move(Vector direction, int speed){
         return new Spaceship(super.getId(), super.getStyle(), super.getSize(), super.getPosition(), direction, speed, super.getRotationDegrees(), super.getDamage(), super.getHealth(), super.isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired);
     }

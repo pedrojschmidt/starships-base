@@ -79,33 +79,34 @@ class Starships() : Application() {
 
 class TimeListener(private val elements: Map<String, ElementModel>, private val game: Game) : EventListener<TimePassed> {
     override fun handle(event: TimePassed) {
-        elements.forEach {
-            val (key, element) = it
-            when(key) {
-                "starship" -> {}
-                "asteroid-1" -> {
-                    element.x.set(element.x.value + 0.25)
-                    element.y.set(element.y.value + 0.25)
-                }
-                else -> {
-                    element.x.set(element.x.value - 0.25)
-                    element.y.set(element.y.value - 0.25)
-                }
+        if (game.isOver) {
+            game.showResults
+            game.reset
+        }
+        game.update
+        val objects = game.objects
+        for (gameObject in objects) {
+            val element = elements.get(gameObject.id)
+            val values = gameObject.posRotSz
+            if (element != null) {
+                element.x.set(values[0])
+                element.y.set(values[1])
+                element.rotationInDegrees.set(values[2])
+                element.height.set(values[3])
+                element.width.set(values[4])
             }
-
-            element.rotationInDegrees.set(element.rotationInDegrees.value + 1)
         }
     }
 }
 
-class CollisionListener() : EventListener<Collision> {
+class CollisionListener(private val game: Game) : EventListener<Collision> {
     override fun handle(event: Collision) {
         println("${event.element1Id} ${event.element2Id}")
     }
 
 }
 
-class KeyPressedListener(private val starship: ElementModel): EventListener<KeyPressed> {
+class KeyPressedListener(private val game: Game): EventListener<KeyPressed> {
     override fun handle(event: KeyPressed) {
         when(event.key) {
             KeyCode.UP -> starship.y.set(starship.y.value - 5 )

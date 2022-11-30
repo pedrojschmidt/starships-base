@@ -32,12 +32,20 @@ public class GameObject {
         this.isVisible = isVisible;
     }
 
+    public GameObject update() {
+        return null;
+    }
+
     public GameObject changeDirSpd(Vector direction, int speed){
         return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
     }
 
     public GameObject changePosDirRot(Vector position, Vector direction, int rotationDegrees){
         return new GameObject(id, type, style, shape, size, position, direction, 0, rotationDegrees, damage, health, isVisible);
+    }
+
+    public Double[] getPosRotSz(){
+        return new Double[]{position.getX(), position.getY(), rotationDegrees, size.getHeight(), size.getWidth()};
     }
 
     public void reduceHealth(int amount){
