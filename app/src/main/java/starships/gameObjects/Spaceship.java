@@ -36,16 +36,20 @@ public class Spaceship extends GameObject {
         setSpeed(0);
     }
 
-    public Spaceship move(Vector direction, int speed){
-        return new Spaceship(getId(), getStyle(), getSize(), getPosition(), direction, speed, getRotationDegrees(), getDamage(), getInitialHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired, playerId);
+    public void move(boolean accelerate){
+        if (accelerate) {
+            setSpeed(20);
+        } else {
+            setSpeed(0);
+        }
+    }
+
+    public void rotate(double rotationDegrees){
+        setRotationDegrees(getRotationDegrees() + rotationDegrees);
     }
 
     public Bullet shoot(){
         return new Bullet(getId() + shotsFired, ObjectStyle.BULLET, new ObjectSize(10, 5), getPosition(), getDirection(), 10, getRotationDegrees(), 5, true, getId());
-    }
-
-    public Spaceship rotate(int rotationDegrees){
-        return new Spaceship(getId(), getStyle(), getSize(), getPosition(), getDirection(), getSpeed(), rotationDegrees, getDamage(), getInitialHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired, playerId);
     }
 
     public Spaceship resetPosition(){

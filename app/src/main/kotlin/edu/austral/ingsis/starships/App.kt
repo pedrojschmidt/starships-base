@@ -116,7 +116,7 @@ class KeyPressedListener(private val game: Game): EventListener<KeyPressed> {
             map["rotate-left-1"] -> game.rotateShip(0, -5.0)
             map["rotate-right-1"] -> game.rotateShip(0, 5.0)
             map["shoot-1"] -> game.shoot(0)
-            KeyCode.P -> game.pauseOrResumeGame()
+//            KeyCode.P -> game.pauseOrResumeGame()
             else -> {}
         }
         if (game.players.size == 2){

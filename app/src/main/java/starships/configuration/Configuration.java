@@ -65,6 +65,7 @@ public class Configuration {
             case "Y" -> KeyCode.Y;
             case "I" -> KeyCode.I;
             case "ENTER" -> KeyCode.ENTER;
+            default -> KeyCode.M;
         };
     }
 
@@ -82,7 +83,7 @@ public class Configuration {
         return switch (str){
             case "SPACESHIP1" -> ObjectStyle.SPACESHIP1;
             case "SPACESHIP2" -> ObjectStyle.SPACESHIP2;
-            case "SPACESHIP3" -> ObjectStyle.SPACESHIP3;
+            default -> ObjectStyle.SPACESHIP3;
         };
     }
 

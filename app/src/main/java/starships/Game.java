@@ -58,27 +58,27 @@ public class Game {
         }
     }
 
-    public void moveShip(int shipNum, boolean up){
-        if (shipNum < objects.size() && objects.get(shipNum).getType() == ObjectType.SPACESHIP && !isPaused){
-            Spaceship spaceship = (Spaceship) objects.get(shipNum);
-            spaceship.move(up);
+    public void moveShip(int spaceshipIndex, boolean accelerate){
+        if (spaceshipIndex < objects.size() && objects.get(spaceshipIndex).getType() == ObjectType.SPACESHIP && !isPaused){
+            Spaceship spaceship = (Spaceship) objects.get(spaceshipIndex);
+            spaceship.move(accelerate);
         }
     }
-    public void rotateShip(int shipNum, double rotation){
-        if (shipNum < objects.size() && objects.get(shipNum).getType() == ObjectType.SPACESHIP && !isPaused){
-            Spaceship spaceship = (Spaceship) objects.get(shipNum);
+    public void rotateShip(int spaceshipIndex, double rotation){
+        if (spaceshipIndex < objects.size() && objects.get(spaceshipIndex).getType() == ObjectType.SPACESHIP && !isPaused){
+            Spaceship spaceship = (Spaceship) objects.get(spaceshipIndex);
             spaceship.rotate(rotation);
         }
     }
 
-    public void shoot(int ship){
-        if (ship < objects.size() && objects.get(ship).getType() == ObjectType.SPACESHIP){
+    public void shoot(int spaceshipIndex){
+        if (spaceshipIndex < objects.size() && objects.get(spaceshipIndex).getType() == ObjectType.SPACESHIP){
+            Spaceship spaceship = (Spaceship) objects.get(spaceshipIndex);
             for (GameObject gameObject : objects){
-                Spaceship bulletsShip = (Spaceship) objects.get(ship);
                 if (gameObject.getType() == ObjectType.BULLET){
                     Bullet bullet = (Bullet) gameObject;
-                    if (!bullet.isVisible() && Objects.equals(bullet.getSpaceshipId(), objects.get(ship).getId())) {
-                        bullet.shoot();
+                    if (!bullet.isVisible() && Objects.equals(bullet.getSpaceshipId(), spaceship.getId())) {
+                        bullet.shoot(spaceship);
                         break;
                     }
                 }
@@ -99,7 +99,7 @@ public class Game {
     public void createPlayers(){
         int amount = configuration.getAmountOfPlayers();
         for (int i = 0; i < amount; i++) {
-            Spaceship spaceship = new Spaceship("spaceship-" + i, configuration.getStyles().get("style-" + i), new ObjectSize(20, 20), new Vector(300, 300), new Vector(0, 1), 0, 180, 20, 100, true, 1000, 1, 0, playerId);
+            Spaceship spaceship = new Spaceship("spaceship-" + i, configuration.getStyles().get("style-" + i), new ObjectSize(20, 20), new Vector(300, 300), new Vector(0, 1), 0, 180, 20, 100, true, 1000, 1, 0, "player-" + i);
             players.add(new Player("player-" + i, 0, configuration.getLivesPerPlayer(), spaceship, true));
         }
     }
@@ -119,7 +119,7 @@ public class Game {
             if (gameObject.getId().equals(id2)) object2 = gameObject;
         }
         if (object1 != null && object2 != null && object1.isVisible() && object2.isVisible()){
-            Collision collision = new Collision(object1, object2, objects, players, objects1, players1);
+            Collision collision = new Collision(object1, object2, objects, players);
         }
     }
 
