@@ -111,8 +111,11 @@ class KeyPressedListener(private val game: Game): EventListener<KeyPressed> {
         val map = game.configuration.keyboardConfiguration;
 //        if (event.key == KeyCode.S && game.isPaused) game.saveGame()
         when(event.key) {
-            map["accelerate-1"] -> game.moveShip(0, true)
-            map["stop-1"] -> game.moveShip(0, false)
+            map["foward-1"] -> game.moveShip(0, Vector(0.0, -1.0))
+            map["backwards-1"] -> game.moveShip(0, Vector(0.0, 1.0))
+            map["left-1"] -> game.moveShip(0, Vector(-1.0, 0.0))
+            map["right-1"] -> game.moveShip(0, Vector(1.0, 0.0))
+            map["stop-1"] -> game.moveShip(0, Vector(0.0, 0.0))
             map["rotate-left-1"] -> game.rotateShip(0, -5.0)
             map["rotate-right-1"] -> game.rotateShip(0, 5.0)
             map["shoot-1"] -> game.shoot(0)
@@ -121,8 +124,11 @@ class KeyPressedListener(private val game: Game): EventListener<KeyPressed> {
         }
         if (game.players.size == 2){
             when(event.key) {
-                map["accelerate-2"] -> game.moveShip(1, true)
-                map["stop-2"] -> game.moveShip(1, false)
+                map["foward-2"] -> game.moveShip(1, Vector(0.0, -1.0))
+                map["backwards-2"] -> game.moveShip(1, Vector(0.0, 1.0))
+                map["left-2"] -> game.moveShip(1, Vector(-1.0, 0.0))
+                map["right-2"] -> game.moveShip(1, Vector(1.0, 0.0))
+                map["stop-2"] -> game.moveShip(1, Vector(0.0, 0.0))
                 map["rotate-left-2"] -> game.rotateShip(1, -5.0)
                 map["rotate-right-2"] -> game.rotateShip(1, 5.0)
                 map["shoot-2"] -> game.shoot(1)

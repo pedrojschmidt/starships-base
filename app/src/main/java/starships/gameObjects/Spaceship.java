@@ -36,11 +36,12 @@ public class Spaceship extends GameObject {
         setSpeed(0);
     }
 
-    public void move(boolean accelerate){
-        if (accelerate) {
-            setSpeed(20);
+    public void move(Vector direction){
+        setDirection(direction);
+        if (direction.getX() == 0.0 && direction.getY() == 0.0) {
+            setSpeed(0.0);
         } else {
-            setSpeed(0);
+            setSpeed(20.0);
         }
     }
 

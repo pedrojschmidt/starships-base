@@ -32,9 +32,9 @@ public class AsteroidGenerator {
                 x = 0;
                 y = aux;
                 if (spaceship.getPosition().getY() > aux) {
-                    direction = new Vector(spaceship.getPosition().getX(), aux + spaceship.getPosition().getY());
-                } else {
                     direction = new Vector(spaceship.getPosition().getX(), aux - spaceship.getPosition().getY());
+                } else {
+                    direction = new Vector(spaceship.getPosition().getX(), aux + spaceship.getPosition().getY());
                 }
             }
             case 1 -> {
@@ -50,9 +50,9 @@ public class AsteroidGenerator {
                 x = 800;
                 y = aux;
                 if (spaceship.getPosition().getY() > aux) {
-                    direction = new Vector(spaceship.getPosition().getX(), aux + spaceship.getPosition().getY());
-                } else {
                     direction = new Vector(spaceship.getPosition().getX(), aux - spaceship.getPosition().getY());
+                } else {
+                    direction = new Vector(spaceship.getPosition().getX(), aux + spaceship.getPosition().getY());
                 }
             }
             default -> {
@@ -84,6 +84,7 @@ public class AsteroidGenerator {
 //        }
         object.setPosition(new Vector(x, y));
         object.setDirection(direction);
+        object.setSpeed(0.01);
 //        object.setSize(new ObjectSize(height, width));
         object.setVisible(true);
         object.setActualHealth(object.getInitialHealth());
