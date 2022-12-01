@@ -108,12 +108,26 @@ class CollisionListener(private val game: Game) : EventListener<Collision> {
 
 class KeyPressedListener(private val game: Game): EventListener<KeyPressed> {
     override fun handle(event: KeyPressed) {
+        val map = game.configuration.keyboardConfiguration;
+//        if (event.key == KeyCode.S && game.isPaused) game.saveGame()
         when(event.key) {
-            KeyCode.UP -> starship.y.set(starship.y.value - 5 )
-            KeyCode.DOWN -> starship.y.set(starship.y.value + 5 )
-            KeyCode.LEFT -> starship.x.set(starship.x.value - 5 )
-            KeyCode.RIGHT -> starship.x.set(starship.x.value + 5 )
+            map["accelerate-1"] -> game.moveShip(0, true)
+            map["stop-1"] -> game.moveShip(0, false)
+            map["rotate-left-1"] -> game.rotateShip(0, -5.0)
+            map["rotate-right-1"] -> game.rotateShip(0, 5.0)
+            map["shoot-1"] -> game.shoot(0)
+            KeyCode.P -> game.pauseOrResumeGame()
             else -> {}
+        }
+        if (game.players.size == 2){
+            when(event.key) {
+                map["accelerate-2"] -> game.moveShip(1, true)
+                map["stop-2"] -> game.moveShip(1, false)
+                map["rotate-left-2"] -> game.rotateShip(1, -5.0)
+                map["rotate-right-2"] -> game.rotateShip(1, 5.0)
+                map["shoot-2"] -> game.shoot(1)
+                else -> {}
+            }
         }
     }
 

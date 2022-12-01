@@ -5,6 +5,7 @@ import starships.gameObjects.Bullet;
 import starships.gameObjects.Spaceship;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Collision {
 
@@ -47,12 +48,12 @@ public class Collision {
             bullet = (Bullet) object2;
             spaceship = (Spaceship) object1;
         }
-        if (Objects.equals(spaceship.getId(), bullet.getShipId())) return;
-        Player player = getPlayer(spaceship.getPlayerId(), players);
+        if (Objects.equals(spaceship.getId(), bullet.getSpaceshipId())) return;
+        Player player = getPlayerFromPlayerId(spaceship.getPlayerId());
         bullet.setVisible(false);
         player.removeLife();
         if (player.getLives() > 0){
-            spaceship.resetShipPosition();
+            spaceship.resetPosDirRotSpd();
         }
         else{
             player.setAlive(false);
@@ -71,11 +72,11 @@ public class Collision {
             bullet = (Bullet) object2;
             asteroid = (Asteroid) object1;
         }
-        Player player = getPlayer(bullet.getShipId(), players, gameObjects);
+        Player player = getPlayerFromSpaceshipId(bullet.getSpaceshipId());
         bullet.setVisible(false);
         asteroid.reduceHealth(bullet.getDamage());
-        if (asteroid.getCurrentHealthBar() < 0){
-            player.addPoints(asteroid.getPoints());
+        if (asteroid.getActualHealth() < 0){
+            player.addPoints(asteroid.getPointsWhenDestroyed());
             asteroid.setVisible(false);
         }
     }
@@ -91,17 +92,37 @@ public class Collision {
             spaceship = (Spaceship) object2;
             asteroid = (Asteroid) object1;
         }
-        Player player = getPlayer(spaceship.getPlayerId(), players);
+        Player player = getPlayerFromPlayerId(spaceship.getPlayerId());
         asteroid.setVisible(false);
         player.removeLife();
         if (player.getLives() > 0){
-            spaceship.resetShipPosition();
+            spaceship.resetPosDirRotSpd();
         }
         else{
             player.setAlive(false);
             spaceship.setVisible(false);
         }
     }
+
+    private Player getPlayerFromPlayerId(String playerId){
+        for (Player player : players){
+            if (playerId.equals(player.getId())){
+                return player;
+            }
+        }
+        return null;
+    }
+    private Player getPlayerFromSpaceshipId(String spaceshipId){
+        String playerId = "";
+        for (GameObject gameObject : objects){
+            if (gameObject.getType() == ObjectType.SPACESHIP && gameObject.getId().equals(spaceshipId)) {
+                Spaceship spaceship = (Spaceship) gameObject;
+                playerId = spaceship.getPlayerId();
+            }
+        }
+        return getPlayerFromPlayerId(playerId);
+    }
+
 
     public GameObject getObject1() {
         return object1;

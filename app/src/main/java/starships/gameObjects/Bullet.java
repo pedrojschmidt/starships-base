@@ -2,6 +2,8 @@ package starships.gameObjects;
 
 import starships.*;
 
+import java.util.Random;
+
 public class Bullet extends GameObject {
 
     private String spaceshipId;
@@ -27,6 +29,22 @@ public class Bullet extends GameObject {
         }
     }
 
+    public void shoot(){
+        Random random = new Random();
+        if (ship.canShoot()){
+            setDirection(ship.getRotation());
+            setRotation(ship.getRotation());
+            setHiding(false);
+            setxPosition(ship.getxPosition()+18);
+            setyPosition(ship.getyPosition());
+            double n = random.nextDouble(5, 15);
+            setHeight(n*3);
+            setWidth(n);
+            setDamage((int) (n*6));
+            ship.shootsBullet();
+        }
+    }
+
     @Override
     public boolean isInBounds() {
         //lo cambio para que llegue a salir por completo de la pantalla
@@ -35,5 +53,9 @@ public class Bullet extends GameObject {
 
     public void removeHealth(){
         super.setInitialHealth(0);
+    }
+
+    public String getSpaceshipId() {
+        return spaceshipId;
     }
 }

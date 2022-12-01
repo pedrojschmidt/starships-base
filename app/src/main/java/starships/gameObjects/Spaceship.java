@@ -7,12 +7,14 @@ public class Spaceship extends GameObject {
     private final int pointsWhenDestroyed;
     private final int bulletsPerShot;
     private final int shotsFired;
+    private final String playerId;
 
-    public Spaceship(String id, ObjectStyle style, ObjectSize size, Vector position, Vector direction, double speed, double rotationDegrees, double damage, double health, boolean isVisible, int pointsWhenDestroyed, int bulletsPerShot, int shotsFired) {
+    public Spaceship(String id, ObjectStyle style, ObjectSize size, Vector position, Vector direction, double speed, double rotationDegrees, double damage, double health, boolean isVisible, int pointsWhenDestroyed, int bulletsPerShot, int shotsFired, String playerId) {
         super(id, ObjectType.SPACESHIP, style, ObjectShape.TRIANGULAR, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
         this.pointsWhenDestroyed = pointsWhenDestroyed;
         this.bulletsPerShot = bulletsPerShot;
         this.shotsFired = shotsFired;
+        this.playerId = playerId;
     }
 
     @Override
@@ -35,7 +37,7 @@ public class Spaceship extends GameObject {
     }
 
     public Spaceship move(Vector direction, int speed){
-        return new Spaceship(getId(), getStyle(), getSize(), getPosition(), direction, speed, getRotationDegrees(), getDamage(), getInitialHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired);
+        return new Spaceship(getId(), getStyle(), getSize(), getPosition(), direction, speed, getRotationDegrees(), getDamage(), getInitialHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired, playerId);
     }
 
     public Bullet shoot(){
@@ -43,11 +45,11 @@ public class Spaceship extends GameObject {
     }
 
     public Spaceship rotate(int rotationDegrees){
-        return new Spaceship(getId(), getStyle(), getSize(), getPosition(), getDirection(), getSpeed(), rotationDegrees, getDamage(), getInitialHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired);
+        return new Spaceship(getId(), getStyle(), getSize(), getPosition(), getDirection(), getSpeed(), rotationDegrees, getDamage(), getInitialHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired, playerId);
     }
 
     public Spaceship resetPosition(){
-        return new Spaceship(getId(), getStyle(), getSize(), new Vector(300, 300), new Vector(0, 1), 0, 180, getDamage(), getInitialHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired);
+        return new Spaceship(getId(), getStyle(), getSize(), new Vector(300, 300), new Vector(0, 1), 0, 180, getDamage(), getInitialHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired, playerId);
     }
 
     public int getPointsWhenDestroyed() {
@@ -56,5 +58,13 @@ public class Spaceship extends GameObject {
 
     public int getBulletsPerShot() {
         return bulletsPerShot;
+    }
+
+    public int getShotsFired() {
+        return shotsFired;
+    }
+
+    public String getPlayerId() {
+        return playerId;
     }
 }

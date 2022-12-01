@@ -33,4 +33,8 @@ public class Asteroid extends GameObject {
         //lo cambio para que llegue a salir por completo de la pantalla
         return getPosition().getX() > (0-getSize().getHeight()) && getPosition().getX() < (800+getSize().getHeight()) && getPosition().getY() > (0-getSize().getHeight()) && getPosition().getY() < (800+getSize().getHeight());
     }
+
+    public int getPointsWhenDestroyed() {
+        return pointsWhenDestroyed;
+    }
 }
