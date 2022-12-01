@@ -65,27 +65,9 @@ public class AsteroidGenerator {
                 }
             }
         }
-//        double height;
-//        double width;
-//        int aux2 = random.nextInt(3);
-//        switch (aux2) {
-//            case 0 -> {
-//                height = 50;
-//                width = 50;
-//            }
-//            case 1 -> {
-//                height = 75;
-//                width = 75;
-//            }
-//            default -> {
-//                height = 100;
-//                width = 100;
-//            }
-//        }
         object.setPosition(new Vector(x, y));
         object.setDirection(direction);
-        object.setSpeed(0.01);
-//        object.setSize(new ObjectSize(height, width));
+        object.setSpeed(0.0015);
         object.setVisible(true);
         object.setActualHealth(object.getInitialHealth());
     }

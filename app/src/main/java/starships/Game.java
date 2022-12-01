@@ -128,8 +128,13 @@ public class Game {
     public void createAsteroids(){
         asteroids = new ArrayList<>();
         int amount = configuration.getAmountOfAsteroids();
-        for (int i = 1; i <= amount; i++) {
-            asteroids.add(new Asteroid("asteroid-" + i, ObjectStyle.ASTEROID1, new ObjectSize(70, 70), new Vector(-100, -100), new Vector(1, -1), 0, 180, 20, 100, false, 1000));
+        int amountPerSize = amount / 3;
+        for (int i = 1; i <= amountPerSize; i++) {
+            asteroids.add(new Asteroid("asteroid-" + i, ObjectStyle.ASTEROID1, new ObjectSize(50, 50), new Vector(-100, -100), new Vector(1, -1), 0, 180, 20, 100, false, 1000));
+            i++;
+            asteroids.add(new Asteroid("asteroid-" + i, ObjectStyle.ASTEROID1, new ObjectSize(70, 70), new Vector(-100, -100), new Vector(1, -1), 0, 180, 30, 140, false, 2000));
+            i++;
+            asteroids.add(new Asteroid("asteroid-" + i, ObjectStyle.ASTEROID1, new ObjectSize(90, 90), new Vector(-100, -100), new Vector(1, -1), 0, 180, 40, 160, false, 3000));
         }
     }
 

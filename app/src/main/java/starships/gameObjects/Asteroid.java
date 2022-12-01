@@ -20,7 +20,7 @@ public class Asteroid extends GameObject {
                 //Solo se mueve dentro de la pantalla
                 if (isInBounds()){
                     setPosition(new Vector(newX, newY));
-                    setRotationDegrees(getRotationDegrees() + 5);
+                    setRotationDegrees(getRotationDegrees() + 1);
                 }else{
                     setVisible(false);
                 }
