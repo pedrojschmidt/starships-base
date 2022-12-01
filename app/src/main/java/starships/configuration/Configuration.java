@@ -41,10 +41,12 @@ public class Configuration {
 
     private Map<String, KeyCode> getKeyBoardMap(String keyBoardSettings) {
         Map<String, KeyCode> map = new HashMap<>();
-        String[] split = keyBoardSettings.split(";");
-        for (String s : split) {
-            String[] innerSplit = s.split("=");
-            map.put(innerSplit[0], getKeyCode(innerSplit[1]));
+        if (keyBoardSettings != null) {
+            String[] split = keyBoardSettings.split(";");
+            for (String s : split) {
+                String[] innerSplit = s.split("=");
+                map.put(innerSplit[0], getKeyCode(innerSplit[1]));
+            }
         }
         return map;
     }

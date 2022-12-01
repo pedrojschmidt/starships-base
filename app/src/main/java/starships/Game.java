@@ -1,13 +1,12 @@
 package starships;
 
-import javafx.scene.input.KeyCode;
 import starships.configuration.Configuration;
 import starships.gameObjects.Asteroid;
 import starships.gameObjects.Bullet;
 import starships.gameObjects.Spaceship;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class Game {
@@ -28,11 +27,13 @@ public class Game {
 
     private void newGame(){
         createPlayers();
+        createBullets(30);
         createAsteroids();
         fillObjects();
     }
 
     private void fillObjects(){
+        objects = new ArrayList<>();
         for (Player player: players) {
             objects.add(player.getSpaceship());
         }
@@ -97,17 +98,38 @@ public class Game {
     }
 
     public void createPlayers(){
+        players = new ArrayList<>();
         int amount = configuration.getAmountOfPlayers();
-        for (int i = 0; i < amount; i++) {
-            Spaceship spaceship = new Spaceship("spaceship-" + i, configuration.getStyles().get("style-" + i), new ObjectSize(20, 20), new Vector(300, 300), new Vector(0, 1), 0, 180, 20, 100, true, 1000, 1, 0, "player-" + i);
+        for (int i = 1; i <= amount; i++) {
+            Spaceship spaceship = new Spaceship("spaceship-" + i, configuration.getStyles().get("style-" + i), new ObjectSize(70, 70), new Vector(250 + i * 80, 350), new Vector(0, 1), 0, 180, 20, 100, true, 1000, 1, 0, "player-" + i);
             players.add(new Player("player-" + i, 0, configuration.getLivesPerPlayer(), spaceship, true));
         }
     }
 
+    public void createBullets(int amount){
+        bullets = new ArrayList<>();
+//        for (int i = 1; i <= amount; i++) {
+//            String id = "bullet-" + i;
+//            double[] pos = NonVisibleObjectsManager.getEmptyPlace();
+//            Spaceship spaceship = putInSpaceship(amount, configuration.getAmountOfPlayers(), i);
+//            bullets.add(new Bullet(id, pos[0], pos[1], 180, 15, 5, spaceship, 180));
+//        }
+    }
+
+    private Spaceship putInSpaceship(int amountOfBullets, int amountOfShips, int i){
+        int aux = amountOfBullets/amountOfShips;
+        for (int j = 0; j < amountOfShips; j++) {
+            if (i < aux) return (Spaceship) objects.get(j);
+            aux *= 2;
+        }
+        return (Spaceship) objects.get(amountOfShips-1);
+    }
+
     public void createAsteroids(){
+        asteroids = new ArrayList<>();
         int amount = configuration.getAmountOfAsteroids();
-        for (int i = 0; i < amount; i++) {
-            asteroids.add(new Asteroid("asteroid-" + i, ObjectStyle.ASTEROID1, new ObjectSize(30, 30), new Vector(0, 800), new Vector(1, -1), 0, 180, 20, 100, true, 1000));
+        for (int i = 1; i <= amount; i++) {
+            asteroids.add(new Asteroid("asteroid-" + i, ObjectStyle.ASTEROID1, new ObjectSize(70, 70), new Vector(0, 0), new Vector(1, -1), 0, 180, 20, 100, true, 1000));
         }
     }
 

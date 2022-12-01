@@ -20,9 +20,9 @@ class Starships() : Application() {
     private val keyTracker = KeyTracker()
 
     companion object {
-        val SPACESHIP1 = ImageRef("spaceship1", 70.0, 70.0)
+        val SPACESHIP1 = ImageRef("spaceship3", 70.0, 70.0)
         val SPACESHIP2 = ImageRef("spaceship2", 70.0, 70.0)
-        val SPACESHIP3 = ImageRef("spaceship3", 70.0, 70.0)
+        val SPACESHIP3 = ImageRef("spaceship1", 70.0, 70.0)
         val BULLET = ImageRef("bullet", 70.0, 70.0)
         val ASTEROID1 = ImageRef("asteroid", 70.0, 70.0)
         val ASTEROID2 = ImageRef("asteroid", 80.0, 80.0)
