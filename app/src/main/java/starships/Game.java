@@ -101,7 +101,12 @@ public class Game {
         players = new ArrayList<>();
         int amount = configuration.getAmountOfPlayers();
         for (int i = 1; i <= amount; i++) {
-            Spaceship spaceship = new Spaceship("spaceship-" + i, configuration.getStyles().get("style-" + i), new ObjectSize(70, 70), new Vector(250 + i * 80, 350), new Vector(0, 1), 0, 180, 20, 100, true, 1000, 1, 0, "player-" + i);
+            Spaceship spaceship;
+            if (i == 1) {
+                spaceship = new Spaceship("spaceship-" + i, configuration.getStyles().get("style-" + i), new ObjectSize(70, 70), new Vector(330, 350), new Vector(0, 1), 0, 180, 20, 100, true, 1000, 1, 0, "player-" + i);
+            } else {
+                spaceship = new Spaceship("spaceship-" + i, configuration.getStyles().get("style-" + i), new ObjectSize(70, 70), new Vector(410, 350), new Vector(0, 1), 0, 180, 20, 100, true, 1000, 1, 0, "player-" + i);
+            }
             players.add(new Player("player-" + i, 0, configuration.getLivesPerPlayer(), spaceship, true));
         }
     }

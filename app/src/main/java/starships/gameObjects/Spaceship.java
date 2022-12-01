@@ -23,15 +23,20 @@ public class Spaceship extends GameObject {
             double newX = getPosition().getX() +  getSpeed() * getDirection().getX();
             double newY = getPosition().getY() +  getSpeed() * getDirection().getY();
             //Solo se mueve dentro de la pantalla
-            if (isInBounds()){
+            if (newX < 800 && newX > 0 && newY < 800 && newY > 0) {
                 setPosition(new Vector(newX, newY));
             }
+            setSpeed(0);
         }
     }
 
     public void resetPosDirRotSpd(){
-        setPosition(new Vector(300, 300));
-        setDirection(new Vector(0, 1));
+        if (getId().equals("spaceship-1")) {
+            setPosition(new Vector(330, 350));
+        } else {
+            setPosition(new Vector(410, 350));
+        }
+        setDirection(new Vector(0, 0));
         setRotationDegrees(180);
         setSpeed(0);
     }
@@ -41,7 +46,7 @@ public class Spaceship extends GameObject {
         if (direction.getX() == 0.0 && direction.getY() == 0.0) {
             setSpeed(0.0);
         } else {
-            setSpeed(20.0);
+            setSpeed(5);
         }
     }
 

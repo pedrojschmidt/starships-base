@@ -20,9 +20,9 @@ class Starships() : Application() {
     private val keyTracker = KeyTracker()
 
     companion object {
-        val SPACESHIP1 = ImageRef("spaceship3", 70.0, 70.0)
+        val SPACESHIP1 = ImageRef("spaceship1", 70.0, 70.0)
         val SPACESHIP2 = ImageRef("spaceship2", 70.0, 70.0)
-        val SPACESHIP3 = ImageRef("spaceship1", 70.0, 70.0)
+        val SPACESHIP3 = ImageRef("spaceship3", 70.0, 70.0)
         val BULLET = ImageRef("bullet", 70.0, 70.0)
         val ASTEROID1 = ImageRef("asteroid", 70.0, 70.0)
         val ASTEROID2 = ImageRef("asteroid", 80.0, 80.0)
@@ -111,7 +111,7 @@ class KeyPressedListener(private val game: Game): EventListener<KeyPressed> {
         val map = game.configuration.keyboardConfiguration;
 //        if (event.key == KeyCode.S && game.isPaused) game.saveGame()
         when(event.key) {
-            map["foward-1"] -> game.moveShip(0, Vector(0.0, -1.0))
+            map["forward-1"] -> game.moveShip(0, Vector(0.0, -1.0))
             map["backwards-1"] -> game.moveShip(0, Vector(0.0, 1.0))
             map["left-1"] -> game.moveShip(0, Vector(-1.0, 0.0))
             map["right-1"] -> game.moveShip(0, Vector(1.0, 0.0))
@@ -124,7 +124,7 @@ class KeyPressedListener(private val game: Game): EventListener<KeyPressed> {
         }
         if (game.players.size == 2){
             when(event.key) {
-                map["foward-2"] -> game.moveShip(1, Vector(0.0, -1.0))
+                map["forward-2"] -> game.moveShip(1, Vector(0.0, -1.0))
                 map["backwards-2"] -> game.moveShip(1, Vector(0.0, 1.0))
                 map["left-2"] -> game.moveShip(1, Vector(-1.0, 0.0))
                 map["right-2"] -> game.moveShip(1, Vector(1.0, 0.0))
