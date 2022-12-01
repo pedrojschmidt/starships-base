@@ -13,6 +13,7 @@ public class AsteroidGenerator {
             for (GameObject gameObject: objects) {
                 if (gameObject.getType().equals(ObjectType.ASTEROID) && !gameObject.isVisible()) {
                     showMeteor(gameObject, getShips(players));
+                    break;
                 }
             }
         }

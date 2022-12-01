@@ -129,7 +129,7 @@ public class Game {
         asteroids = new ArrayList<>();
         int amount = configuration.getAmountOfAsteroids();
         for (int i = 1; i <= amount; i++) {
-            asteroids.add(new Asteroid("asteroid-" + i, ObjectStyle.ASTEROID1, new ObjectSize(70, 70), new Vector(0, 0), new Vector(1, -1), 0, 180, 20, 100, true, 1000));
+            asteroids.add(new Asteroid("asteroid-" + i, ObjectStyle.ASTEROID1, new ObjectSize(70, 70), new Vector(0, 0), new Vector(1, -1), 0, 180, 20, 100, false, 1000));
         }
     }
 
