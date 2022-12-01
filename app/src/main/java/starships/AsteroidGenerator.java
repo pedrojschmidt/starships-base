@@ -32,36 +32,36 @@ public class AsteroidGenerator {
                 x = 0;
                 y = aux;
                 if (spaceship.getPosition().getY() > aux) {
-                    direction = new Vector(spaceship.getPosition().getX(), aux - spaceship.getPosition().getY());
+                    direction = new Vector(spaceship.getPosition().getX(), spaceship.getPosition().getY() + aux);
                 } else {
-                    direction = new Vector(spaceship.getPosition().getX(), aux + spaceship.getPosition().getY());
+                    direction = new Vector(spaceship.getPosition().getX(), spaceship.getPosition().getY() - aux);
                 }
             }
             case 1 -> {
                 x = aux;
                 y = 0;
                 if (spaceship.getPosition().getX() > aux) {
-                    direction = new Vector(aux + spaceship.getPosition().getX(), spaceship.getPosition().getY());
+                    direction = new Vector(spaceship.getPosition().getX() + aux, spaceship.getPosition().getY());
                 } else {
-                    direction = new Vector(aux - spaceship.getPosition().getX(), spaceship.getPosition().getY());
+                    direction = new Vector(spaceship.getPosition().getX() - aux, spaceship.getPosition().getY());
                 }
             }
             case 2 -> {
                 x = 800;
                 y = aux;
                 if (spaceship.getPosition().getY() > aux) {
-                    direction = new Vector(spaceship.getPosition().getX(), aux - spaceship.getPosition().getY());
+                    direction = new Vector(-spaceship.getPosition().getX(), spaceship.getPosition().getY() + aux);
                 } else {
-                    direction = new Vector(spaceship.getPosition().getX(), aux + spaceship.getPosition().getY());
+                    direction = new Vector(-spaceship.getPosition().getX(), spaceship.getPosition().getY() - aux);
                 }
             }
             default -> {
                 x = aux;
                 y = 800;
                 if (spaceship.getPosition().getX() > aux) {
-                    direction = new Vector(aux + spaceship.getPosition().getX(), spaceship.getPosition().getY());
+                    direction = new Vector(spaceship.getPosition().getX() + aux, -spaceship.getPosition().getY());
                 } else {
-                    direction = new Vector(aux - spaceship.getPosition().getX(), spaceship.getPosition().getY());
+                    direction = new Vector(spaceship.getPosition().getX() - aux, -spaceship.getPosition().getY());
                 }
             }
         }
