@@ -58,11 +58,11 @@ public class Collision {
             if (player.getLives() > 0) {
                 spaceship.resetPosDirRotSpdHlth();
             }
-            else{
-                player.setAlive(false);
-                spaceship.setVisible(false);
-                spaceship.setPosition(new Vector(-100, -100)); // para que desaparezca
-            }
+        }
+        if (player.getLives() <= 0){
+            player.setAlive(false);
+            spaceship.setVisible(false);
+            spaceship.setPosition(new Vector(-100, -100)); // para que desaparezca
         }
     }
 
@@ -106,11 +106,11 @@ public class Collision {
             if (player.getLives() > 0) {
                 spaceship.resetPosDirRotSpdHlth();
             }
-            else{
-                player.setAlive(false);
-                spaceship.setVisible(false);
-                spaceship.setPosition(new Vector(-100, -100)); // para que desaparezca
-            }
+        }
+        if (player.getLives() <= 0){
+            player.setAlive(false);
+            spaceship.setVisible(false);
+            spaceship.setPosition(new Vector(-100, -100)); // para que desaparezca
         }
     }
 

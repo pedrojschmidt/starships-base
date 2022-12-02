@@ -26,7 +26,7 @@ public class Spaceship extends GameObject {
             if (newX < 800 && newX > 0 && newY < 800 && newY > 0) {
                 setPosition(new Vector(newX, newY));
             }
-            setSpeed(0);
+//            setSpeed(0); // esto hace que cuando suelto la tecla se deje de mover (si saco esta linea se sigue moviendo aunque suelte)
         }
     }
 
@@ -38,7 +38,7 @@ public class Spaceship extends GameObject {
         }
         setDirection(new Vector(0, 0));
         setRotationDegrees(180);
-        setSpeed(0); // esto hace que cuando suelto la tecla se deje de mover (si saco esta linea se sigue moviendo aunque suelte)
+        setSpeed(0);
         setActualHealth(getInitialHealth());
     }
 
@@ -47,7 +47,7 @@ public class Spaceship extends GameObject {
         if (direction.getX() == 0.0 && direction.getY() == 0.0) {
             setSpeed(0.0);
         } else {
-            setSpeed(5);
+            setSpeed(4);
         }
     }
 

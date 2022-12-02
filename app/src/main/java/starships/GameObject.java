@@ -44,9 +44,6 @@ public class GameObject {
 
     public void reduceHealth(double amount){
         setActualHealth(actualHealth -amount);
-        if (actualHealth <= 0) {
-            setVisible(false);
-        }
     }
 
     public boolean isInBounds(){
@@ -55,8 +52,9 @@ public class GameObject {
 
     public void setDirectionFromRotation(double degrees){
         //De esta manera, el modulo del vector siempre es 1
-        double y = Math.sqrt(Math.pow(Math.tan(degrees), 2) / (1 + Math.pow(Math.tan(degrees), 2)));
-        double x = y / Math.tan(degrees);
+        double pow = Math.pow(Math.tan(360-degrees), 2);
+        double x = Math.sqrt(pow / (1 + pow));
+        double y = x / Math.tan(360-degrees);
         setDirection(new Vector(x, y));
     }
 
