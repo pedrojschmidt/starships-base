@@ -30,7 +30,7 @@ public class Spaceship extends GameObject {
         }
     }
 
-    public void resetPosDirRotSpd(){
+    public void resetPosDirRotSpdHlth(){
         if (getId().equals("spaceship-1")) {
             setPosition(new Vector(330, 350));
         } else {
@@ -38,7 +38,8 @@ public class Spaceship extends GameObject {
         }
         setDirection(new Vector(0, 0));
         setRotationDegrees(180);
-        setSpeed(0);
+        setSpeed(0); // esto hace que cuando suelto la tecla se deje de mover (si saco esta linea se sigue moviendo aunque suelte)
+        setActualHealth(getInitialHealth());
     }
 
     public void move(Vector direction){

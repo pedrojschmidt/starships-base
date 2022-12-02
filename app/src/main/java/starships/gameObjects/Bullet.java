@@ -30,18 +30,13 @@ public class Bullet extends GameObject {
     }
 
     public void shoot(Spaceship spaceship){
-        Random random = new Random();
+//        Random random = new Random();
 //        if (spaceship.canShoot()){
-//            setDirection(spaceship.getRotation());
-//            setRotation(spaceship.getRotation());
-//            setHiding(false);
-//            setxPosition(spaceship.getxPosition()+18);
-//            setyPosition(spaceship.getyPosition());
-//            double n = random.nextDouble(5, 15);
-//            setHeight(n*3);
-//            setWidth(n);
-//            setDamage((int) (n*6));
-//            spaceship.shootsBullet();
+            setDirectionFromRotation(spaceship.getRotationDegrees());
+            setRotationDegrees(spaceship.getRotationDegrees());
+            setVisible(true);
+            setPosition(new Vector(spaceship.getPosition().getX()+15, spaceship.getPosition().getY()));
+//            spaceship.shoot();
 //        }
     }
 

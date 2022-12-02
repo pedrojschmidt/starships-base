@@ -53,6 +53,13 @@ public class GameObject {
         return position.getX() > 0 && position.getX() < 800 && position.getY() > 0 && position.getY() < 800;
     }
 
+    public void setDirectionFromRotation(double degrees){
+        //De esta manera, el modulo del vector siempre es 1
+        double y = Math.sqrt(Math.pow(Math.tan(degrees), 2) / (1 + Math.pow(Math.tan(degrees), 2)));
+        double x = y / Math.tan(degrees);
+        setDirection(new Vector(x, y));
+    }
+
     public GameObject setId(String id){
         return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, initialHealth, isVisible);
     }
@@ -75,6 +82,10 @@ public class GameObject {
 
     public GameObject setDamage(double damage){
         return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, initialHealth, isVisible);
+    }
+
+    public void resetHealth(){
+
     }
 
     public void setActualHealth(double actualHealth) {

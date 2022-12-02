@@ -7,6 +7,7 @@ import javafx.application.Application
 import javafx.application.Application.launch
 import javafx.scene.Scene
 import javafx.scene.input.KeyCode
+import javafx.scene.paint.Paint
 import javafx.stage.Stage
 import starships.*
 

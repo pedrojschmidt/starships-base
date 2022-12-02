@@ -51,13 +51,18 @@ public class Collision {
         if (Objects.equals(spaceship.getId(), bullet.getSpaceshipId())) return;
         Player player = getPlayerFromPlayerId(spaceship.getPlayerId());
         bullet.setVisible(false);
-        player.removeLife();
-        if (player.getLives() > 0){
-            spaceship.resetPosDirRotSpd();
-        }
-        else{
-            player.setAlive(false);
-            spaceship.setVisible(false);
+        bullet.setPosition(new Vector(-100, -100)); // para que desaparezca
+        spaceship.reduceHealth(bullet.getDamage());
+        if (spaceship.getActualHealth() < 0) {
+            player.removeLife();
+            if (player.getLives() > 0) {
+                spaceship.resetPosDirRotSpdHlth();
+            }
+            else{
+                player.setAlive(false);
+                spaceship.setVisible(false);
+                spaceship.setPosition(new Vector(-100, -100)); // para que desaparezca
+            }
         }
     }
 
@@ -74,6 +79,7 @@ public class Collision {
         }
         Player player = getPlayerFromSpaceshipId(bullet.getSpaceshipId());
         bullet.setVisible(false);
+        bullet.setPosition(new Vector(-100, -100)); // para que desaparezca
         asteroid.reduceHealth(bullet.getDamage());
         if (asteroid.getActualHealth() < 0){
             player.addPoints(asteroid.getPointsWhenDestroyed());
@@ -94,13 +100,17 @@ public class Collision {
         }
         Player player = getPlayerFromPlayerId(spaceship.getPlayerId());
         asteroid.setVisible(false);
-        player.removeLife();
-        if (player.getLives() > 0){
-            spaceship.resetPosDirRotSpd();
-        }
-        else{
-            player.setAlive(false);
-            spaceship.setVisible(false);
+        spaceship.reduceHealth(asteroid.getDamage());
+        if (spaceship.getActualHealth() < 0) {
+            player.removeLife();
+            if (player.getLives() > 0) {
+                spaceship.resetPosDirRotSpdHlth();
+            }
+            else{
+                player.setAlive(false);
+                spaceship.setVisible(false);
+                spaceship.setPosition(new Vector(-100, -100)); // para que desaparezca
+            }
         }
     }
 
