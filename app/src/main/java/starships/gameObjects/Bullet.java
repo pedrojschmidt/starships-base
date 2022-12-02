@@ -35,7 +35,7 @@ public class Bullet extends GameObject {
             setDirectionFromRotation(spaceship.getRotationDegrees());
             setRotationDegrees(spaceship.getRotationDegrees());
             setVisible(true);
-            setPosition(new Vector(spaceship.getPosition().getX()+15, spaceship.getPosition().getY()));
+            setPosition(new Vector(spaceship.getPosition().getX()+20, spaceship.getPosition().getY()));
 //            spaceship.shoot();
 //        }
     }
