@@ -56,26 +56,29 @@ public class GameObject {
             degreesBetween0and360 = degreesBetween0and360 - 360;
         }
         double radians = Math.toRadians(degreesBetween0and360);
-        if (degreesBetween0and360 > 0 && degreesBetween0and360 <= 90) {
+        if (degreesBetween0and360 >= 0 && degreesBetween0and360 <= 90) {
             //De esta manera, el modulo del vector siempre es 1
             double pow = Math.pow(Math.tan(radians), 2);
             double x = Math.sqrt(pow / (1 + pow)); // -x
             double y = x / Math.tan(radians); // +y
             setDirection(new Vector(-x, y));
         } else if (degreesBetween0and360 > 90 && degreesBetween0and360 <= 180) {
-            double pow = Math.pow(Math.tan(radians-90), 2);
+            double tan = Math.tan(radians - Math.toRadians(90));
+            double pow = Math.pow(tan, 2);
             double y = Math.sqrt(pow / (1 + pow)); // -y
-            double x = y / Math.tan(radians-90); // -x
+            double x = y / tan; // -x
             setDirection(new Vector(-x, -y));
         } else if (degreesBetween0and360 > 180 && degreesBetween0and360 <= 270) {
-            double pow = Math.pow(Math.tan(radians-180), 2);
+            double tan = Math.tan(radians - Math.toRadians(180));
+            double pow = Math.pow(tan, 2);
             double x = Math.sqrt(pow / (1 + pow)); // +x
-            double y = x / Math.tan(radians-180); // -y
+            double y = x / tan; // -y
             setDirection(new Vector(x, -y));
         } else if (degreesBetween0and360 > 270) {
-            double pow = Math.pow(Math.tan(radians-270), 2);
+            double tan = Math.tan(radians - Math.toRadians(270));
+            double pow = Math.pow(tan, 2);
             double y = Math.sqrt(pow / (1 + pow)); // +y
-            double x = y / Math.tan(radians-270); // +x
+            double x = y / tan; // +x
             setDirection(new Vector(x, y));
         }
     }
