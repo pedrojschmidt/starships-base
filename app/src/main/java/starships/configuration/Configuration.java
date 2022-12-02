@@ -60,12 +60,12 @@ public class Configuration {
             case "Q" -> KeyCode.Q;
             case "E" -> KeyCode.E;
             case "SPACE" -> KeyCode.SPACE;
-            case "U" -> KeyCode.U;
-            case "J" -> KeyCode.J;
-            case "H" -> KeyCode.H;
-            case "K" -> KeyCode.K;
-            case "Y" -> KeyCode.Y;
-            case "I" -> KeyCode.I;
+            case "UP" -> KeyCode.UP;
+            case "DOWN" -> KeyCode.DOWN;
+            case "LEFT" -> KeyCode.LEFT;
+            case "RIGHT" -> KeyCode.RIGHT;
+            case "NUMPAD1" -> KeyCode.NUMPAD1;
+            case "NUMPAD2" -> KeyCode.NUMPAD2;
             case "ENTER" -> KeyCode.ENTER;
             default -> KeyCode.M;
         };
