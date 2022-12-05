@@ -5,11 +5,17 @@ import edu.austral.ingsis.starships.ui.Collision
 import edu.austral.ingsis.starships.ui.ElementColliderType.*
 import javafx.application.Application
 import javafx.application.Application.launch
+import javafx.geometry.Pos
+import javafx.scene.Cursor
 import javafx.scene.Scene
+import javafx.scene.control.Label
 import javafx.scene.input.KeyCode
-import javafx.scene.paint.Paint
+import javafx.scene.layout.HBox
+import javafx.scene.layout.StackPane
+import javafx.scene.layout.VBox
 import javafx.stage.Stage
 import starships.*
+import kotlin.system.exitProcess
 
 fun main() {
     launch(Starships::class.java)
@@ -32,20 +38,16 @@ class Starships() : Application() {
     }
 
     override fun start(primaryStage: Stage) {
-        game.start()
-        val objects = game.objects
-        for(gameObject in objects){
-            facade.elements[gameObject.id] = ElementModel(gameObject.id, gameObject.position.x, gameObject.position.y, gameObject.size.height, gameObject.size.width, gameObject.rotationDegrees, convertShape(gameObject.shape), convertImage(gameObject))
-        }
+        val pane = mainGameScene()
+        val menu = menuScene(primaryStage, pane)
 
-        facade.timeListenable.addEventListener(TimeListener(facade.elements, game))
+        facade.timeListenable.addEventListener(TimeListener(facade.elements, game, this))
         facade.collisionsListenable.addEventListener(CollisionListener(game))
-        keyTracker.keyPressedListenable.addEventListener(KeyPressedListener(game))
+        keyTracker.keyPressedListenable.addEventListener(KeyPressedListener(game, this, primaryStage, pane, menu))
 
-        val scene = Scene(facade.view)
-        keyTracker.scene = scene
+        keyTracker.scene = menu
 
-        primaryStage.scene = scene
+        primaryStage.scene = menu
         primaryStage.height = 800.0
         primaryStage.width = 800.0
 
@@ -57,6 +59,88 @@ class Starships() : Application() {
     override fun stop() {
         facade.stop()
         keyTracker.stop()
+        exitProcess(0)
+    }
+
+    private fun mainGameScene(): StackPane {
+        val pane = StackPane()
+        val root = facade.view
+        pane.children.addAll(root)
+        root.id = "pane"
+        return pane
+    }
+
+    private fun menuScene(primaryStage: Stage, pane: StackPane): Scene {
+        val title = Label("Starships")
+        title.textFill = javafx.scene.paint.Color.AQUAMARINE
+        title.style = "-fx-font-family: VT323; -fx-font-size: 100;"
+
+        val newGame = Label("New Game")
+        newGame.textFill = javafx.scene.paint.Color.WHITE
+        newGame.style = "-fx-font-family: VT323; -fx-font-size: 50"
+        newGame.setOnMouseClicked {
+            primaryStage.scene.root = pane
+            game.start()
+            createObjects()
+        }
+
+        newGame.setOnMouseEntered {
+            newGame.cursor = Cursor.HAND
+        }
+
+        val newGameAux = HBox(70.0)
+        newGameAux.alignment = Pos.CENTER
+        newGameAux.children.addAll(newGame)
+
+        val verticalLayout = VBox(50.0)
+        verticalLayout.id = "menu"
+        verticalLayout.alignment = Pos.CENTER
+        verticalLayout.children.addAll(title, newGameAux)
+
+        val menu = Scene(verticalLayout)
+        menu.stylesheets.add(this::class.java.classLoader.getResource("styles.css")?.toString())
+        return menu
+    }
+
+    fun pauseScene(primaryStage: Stage, pane: StackPane, menu: Scene): Scene {
+        val resume = Label("Resume")
+        resume.textFill = javafx.scene.paint.Color.WHITE
+        resume.style = "-fx-font-family: VT323; -fx-font-size: 50"
+        resume.setOnMouseClicked {
+            primaryStage.scene = menu
+            primaryStage.scene.root = pane
+            game.isPaused = false
+        }
+
+        resume.setOnMouseEntered {
+            resume.cursor = Cursor.HAND
+        }
+
+        val finishGame = Label("Finish game")
+        finishGame.textFill = javafx.scene.paint.Color.WHITE
+        finishGame.style = "-fx-font-family: VT323; -fx-font-size: 50;"
+        finishGame.setOnMouseClicked {
+            game.showResults()
+            stop()
+        }
+        finishGame.setOnMouseEntered {
+            finishGame.cursor = Cursor.HAND
+        }
+
+        val verticalLayout = VBox(50.0)
+        verticalLayout.id = "pause"
+        verticalLayout.alignment = Pos.CENTER
+        verticalLayout.children.addAll(resume, finishGame)
+        val pause = Scene(verticalLayout)
+        pause.stylesheets.add(this::class.java.classLoader.getResource("styles.css")?.toString())
+        return pause
+    }
+
+    private fun createObjects(){
+        val objects = game.objects
+        for(gameObject in objects){
+            facade.elements[gameObject.id] = ElementModel(gameObject.id, gameObject.position.x, gameObject.position.y, gameObject.size.height, gameObject.size.width, gameObject.rotationDegrees, convertShape(gameObject.shape), convertImage(gameObject))
+        }
     }
 
     fun convertShape(shape: ObjectShape) : ElementColliderType {
@@ -78,14 +162,15 @@ class Starships() : Application() {
     }
 }
 
-class TimeListener(private val elements: Map<String, ElementModel>, private val game: Game) : EventListener<TimePassed> {
+class TimeListener(private val elements: Map<String, ElementModel>, private val game: Game, private val starships: Starships) : EventListener<TimePassed> {
     override fun handle(event: TimePassed) {
         if (game.isOver) {
             game.showResults()
             game.reset()
+            starships.stop()
         }
         game.update()
-        val objects = game.objects
+        val objects = game.objects ?: return;
         for (gameObject in objects) {
             val element = elements.get(gameObject.id)
             val values = gameObject.posRotSz
@@ -107,7 +192,7 @@ class CollisionListener(private val game: Game) : EventListener<Collision> {
 
 }
 
-class KeyPressedListener(private val game: Game): EventListener<KeyPressed> {
+class KeyPressedListener(private val game: Game, private val starships: Starships, private val primaryStage: Stage, private val pane: StackPane, private val menu: Scene): EventListener<KeyPressed> {
     override fun handle(event: KeyPressed) {
         val map = game.configuration.keyboardConfiguration;
 //        if (event.key == KeyCode.S && game.isPaused) game.saveGame()
@@ -120,7 +205,12 @@ class KeyPressedListener(private val game: Game): EventListener<KeyPressed> {
             map["rotate-left-1"] -> game.rotateShip(0, -5.0)
             map["rotate-right-1"] -> game.rotateShip(0, 5.0)
             map["shoot-1"] -> game.shoot(0)
-//            KeyCode.P -> game.pauseOrResumeGame()
+            KeyCode.P -> {
+                game.isPaused = true
+                if (game.isPaused){
+                    primaryStage.scene = starships.pauseScene(primaryStage, pane, menu)
+                }
+            }
             else -> {}
         }
         if (game.players.size == 2){
@@ -133,6 +223,12 @@ class KeyPressedListener(private val game: Game): EventListener<KeyPressed> {
                 map["rotate-left-2"] -> game.rotateShip(1, -5.0)
                 map["rotate-right-2"] -> game.rotateShip(1, 5.0)
                 map["shoot-2"] -> game.shoot(1)
+                KeyCode.P -> {
+                    game.isPaused = true
+                    if (game.isPaused){
+                        primaryStage.scene = starships.pauseScene(primaryStage, pane, menu)
+                    }
+                }
                 else -> {}
             }
         }

@@ -46,15 +46,21 @@ public class Game {
         this.isPaused = false;
     }
 
+    public void setPaused(boolean paused) {
+        isPaused = paused;
+    }
+
     public void reset(){
         newGame();
     }
 
     public void update(){
         if (!isPaused){
-            AsteroidGenerator.generateAsteroids(objects, players);
-            for (GameObject gameObject : objects){
-                gameObject.update();
+            if (objects != null) {
+                AsteroidGenerator.generateAsteroids(objects, players);
+                for (GameObject gameObject : objects){
+                    gameObject.update();
+                }
             }
         }
     }
@@ -91,7 +97,7 @@ public class Game {
         System.out.println("------------------------- RESULTADOS -------------------------");
         for (Player player: players) {
             System.out.println("");
-            System.out.println("Jugador: " + player.getId() + " obtuvo " + player.getPoints() + " puntos");
+            System.out.println(player.getId() + " obtuvo " + player.getPoints() + " puntos");
             System.out.println("");
         }
         System.out.println("--------------------------------------------------------------");
@@ -116,7 +122,7 @@ public class Game {
         for (int i = 1; i <= amount; i++) {
             String id = "bullet-" + i;
             Spaceship spaceship = putInSpaceship(amount, configuration.getAmountOfPlayers(), i);
-            bullets.add(new Bullet(id, ObjectStyle.BULLET, new ObjectSize(50, 25), new Vector(-100, -100), new Vector(0, 0), 7, 0, 25, false, spaceship.getId()));
+            bullets.add(new Bullet(id, ObjectStyle.BULLET, new ObjectSize(50, 25), new Vector(-100, -100), new Vector(0, 0), 7, 0, 35, false, spaceship.getId()));
         }
     }
 
@@ -187,4 +193,5 @@ public class Game {
     public boolean isOver() {
         return isOver;
     }
+
 }

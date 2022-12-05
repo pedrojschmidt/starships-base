@@ -54,6 +54,8 @@ public class Collision {
         bullet.setPosition(new Vector(-100, -100)); // para que desaparezca
         spaceship.reduceHealth(bullet.getDamage());
         if (spaceship.getActualHealth() < 0) {
+            Player player2 = getPlayerFromSpaceshipId(bullet.getSpaceshipId());
+            player2.addPoints(spaceship.getPointsWhenDestroyed());
             player.removeLife();
             if (player.getLives() > 0) {
                 spaceship.resetPosDirRotSpdHlth();
