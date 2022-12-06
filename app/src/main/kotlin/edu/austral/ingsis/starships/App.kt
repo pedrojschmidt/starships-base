@@ -38,8 +38,8 @@ class Starships() : Application() {
     }
 
     override fun start(primaryStage: Stage) {
-        val pane = mainGameScene()
-        val menu = menuScene(primaryStage, pane)
+        val pane = gameScene()
+        val menu = menu(primaryStage, pane)
 
         facade.timeListenable.addEventListener(TimeListener(facade.elements, game, this))
         facade.collisionsListenable.addEventListener(CollisionListener(game))
@@ -62,7 +62,7 @@ class Starships() : Application() {
         exitProcess(0)
     }
 
-    private fun mainGameScene(): StackPane {
+    private fun gameScene(): StackPane {
         val pane = StackPane()
         val root = facade.view
         pane.children.addAll(root)
@@ -70,32 +70,32 @@ class Starships() : Application() {
         return pane
     }
 
-    private fun menuScene(primaryStage: Stage, pane: StackPane): Scene {
+    private fun menu(primaryStage: Stage, pane: StackPane): Scene {
         val title = Label("Starships")
         title.textFill = javafx.scene.paint.Color.AQUAMARINE
-        title.style = "-fx-font-family: VT323; -fx-font-size: 100;"
+        title.style = "-fx-font-size: 90;"
 
-        val newGame = Label("New Game")
-        newGame.textFill = javafx.scene.paint.Color.WHITE
-        newGame.style = "-fx-font-family: VT323; -fx-font-size: 50"
-        newGame.setOnMouseClicked {
+        val play = Label("Jugar")
+        play.textFill = javafx.scene.paint.Color.WHITE
+        play.style = "-fx-font-size: 45"
+        play.setOnMouseClicked {
             primaryStage.scene.root = pane
             game.start()
             createObjects()
         }
 
-        newGame.setOnMouseEntered {
-            newGame.cursor = Cursor.HAND
+        play.setOnMouseEntered {
+            play.cursor = Cursor.HAND
         }
 
-        val newGameAux = HBox(70.0)
-        newGameAux.alignment = Pos.CENTER
-        newGameAux.children.addAll(newGame)
+        val playAux = HBox(70.0)
+        playAux.alignment = Pos.CENTER
+        playAux.children.addAll(play)
 
-        val verticalLayout = VBox(50.0)
+        val verticalLayout = VBox(450.0)
         verticalLayout.id = "menu"
         verticalLayout.alignment = Pos.CENTER
-        verticalLayout.children.addAll(title, newGameAux)
+        verticalLayout.children.addAll(title, playAux)
 
         val menu = Scene(verticalLayout)
         menu.stylesheets.add(this::class.java.classLoader.getResource("styles.css")?.toString())
@@ -103,9 +103,9 @@ class Starships() : Application() {
     }
 
     fun pauseScene(primaryStage: Stage, pane: StackPane, menu: Scene): Scene {
-        val resume = Label("Resume")
+        val resume = Label("Reanudar")
         resume.textFill = javafx.scene.paint.Color.WHITE
-        resume.style = "-fx-font-family: VT323; -fx-font-size: 50"
+        resume.style = "-fx-font-size: 45"
         resume.setOnMouseClicked {
             primaryStage.scene = menu
             primaryStage.scene.root = pane
@@ -116,9 +116,9 @@ class Starships() : Application() {
             resume.cursor = Cursor.HAND
         }
 
-        val finishGame = Label("Finish game")
+        val finishGame = Label("Finalizar Juego")
         finishGame.textFill = javafx.scene.paint.Color.WHITE
-        finishGame.style = "-fx-font-family: VT323; -fx-font-size: 50;"
+        finishGame.style = "-fx-font-size: 45;"
         finishGame.setOnMouseClicked {
             game.showResults()
             stop()
@@ -127,7 +127,7 @@ class Starships() : Application() {
             finishGame.cursor = Cursor.HAND
         }
 
-        val verticalLayout = VBox(50.0)
+        val verticalLayout = VBox(70.0)
         verticalLayout.id = "pause"
         verticalLayout.alignment = Pos.CENTER
         verticalLayout.children.addAll(resume, finishGame)
