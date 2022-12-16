@@ -58,11 +58,53 @@ public class Game {
         if (!isPaused){
             if (objects != null) {
                 AsteroidGenerator.generateAsteroids(objects, players);
+                List<GameObject> objectsAux = new ArrayList<>();
+                objectsAux.addAll(objects);
                 for (GameObject gameObject : objects){
-                    gameObject.update();
+                    if (gameObject.getType() == ObjectType.SPACESHIP) {
+                        Spaceship spaceship = (Spaceship) gameObject;
+                        Spaceship newSpaceship = spaceship.update();
+
+                        objectsAux.remove(spaceship);
+                        objectsAux.add(newSpaceship);
+
+                        Player owner = getPlayerBySpaceship(spaceship);
+                        owner.setSpaceship(newSpaceship);
+                    } else if (gameObject.getType() == ObjectType.BULLET){
+                        Bullet bullet = (Bullet) gameObject;
+
+                        objectsAux.remove(bullet);
+                        objectsAux.add(bullet.update());
+
+                        List<Bullet> bulletsAux = new ArrayList<>();
+                        bulletsAux.addAll(bullets);
+                        bulletsAux.remove(bullet);
+                        bulletsAux.add(bullet);
+                    } else if (gameObject.getType() == ObjectType.ASTEROID){
+                        Asteroid asteroid = (Asteroid) gameObject;
+
+                        objectsAux.remove(asteroid);
+                        objectsAux.add(asteroid.update());
+
+                        List<Asteroid> asteroidsAux = new ArrayList<>();
+                        asteroidsAux.addAll(asteroids);
+                        asteroidsAux.remove(asteroid);
+                        asteroidsAux.add(asteroid);
+                    }
                 }
+                objects = objectsAux;
             }
         }
+    }
+
+    public Player getPlayerBySpaceship(Spaceship spaceship){
+        String playerId = spaceship.getPlayerId();
+        for (Player player: players) {
+            if (player.getId().equals(playerId)) {
+                return player;
+            }
+        }
+        return null;
     }
 
     public void moveShip(int spaceshipIndex, Vector direction){

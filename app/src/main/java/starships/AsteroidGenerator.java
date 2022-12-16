@@ -65,11 +65,11 @@ public class AsteroidGenerator {
                 }
             }
         }
-        object.setPosition(new Vector(x, y));
-        object.setDirection(direction);
-        object.setSpeed(0.0015);
-        object.setVisible(true);
-        object.setActualHealth(object.getInitialHealth());
+        object = object.setPosition(new Vector(x, y));
+        object = object.setDirection(direction);
+        object = object.setSpeed(0.0015);
+        object = object.setVisible(true);
+        object = object.setActualHealth(object.getInitialHealth());
     }
 
     public static List<Spaceship> getShips(List<Player> players){

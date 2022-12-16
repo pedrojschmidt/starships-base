@@ -10,24 +10,24 @@ public class Spaceship extends GameObject {
     private final String playerId;
 
     public Spaceship(String id, ObjectStyle style, ObjectSize size, Vector position, Vector direction, double speed, double rotationDegrees, double damage, double health, boolean isVisible, int pointsWhenDestroyed, int bulletsPerShot, int shotsFired, String playerId) {
-        super(id, ObjectType.SPACESHIP, style, ObjectShape.TRIANGULAR, size, position, direction, speed, rotationDegrees, damage, health, isVisible);
+        super(id, ObjectType.SPACESHIP, style, ObjectShape.TRIANGULAR, size, position, direction, speed, rotationDegrees, damage, health, isVisible, health);
         this.pointsWhenDestroyed = pointsWhenDestroyed;
         this.bulletsPerShot = bulletsPerShot;
         this.shotsFired = shotsFired;
         this.playerId = playerId;
     }
 
-    @Override
-    public void update() {
+    public Spaceship update() {
         if (getSpeed() > 0){
             double newX = getPosition().getX() +  getSpeed() * getDirection().getX();
             double newY = getPosition().getY() +  getSpeed() * getDirection().getY();
             //Solo se mueve dentro de la pantalla
             if (newX < 720 && newX > 0 && newY < 700 && newY > 0) {
-                setPosition(new Vector(newX, newY));
+                return setPosition(new Vector(newX, newY));
             }
 //            setSpeed(0); // esto hace que cuando suelto la tecla se deje de mover (si saco esta linea se sigue moviendo aunque suelte)
         }
+        return this;
     }
 
     public void resetPosDirRotSpdHlth(){
@@ -61,6 +61,26 @@ public class Spaceship extends GameObject {
 
     public Spaceship resetPosition(){
         return new Spaceship(getId(), getStyle(), getSize(), new Vector(300, 300), new Vector(0, 1), 0, 180, getDamage(), getInitialHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired, playerId);
+    }
+
+    public Spaceship setPosition(Vector position) {
+        return new Spaceship(getId(), getStyle(), getSize(), position, getDirection(), getSpeed(), getRotationDegrees(), getDamage(), getInitialHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired, playerId);
+    }
+
+    public Spaceship setDirection(Vector direction) {
+        return new Spaceship(getId(), getStyle(), getSize(), getPosition(), direction, getSpeed(), getRotationDegrees(), getDamage(), getInitialHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired, playerId);
+    }
+
+    public Spaceship setSpeed(double speed) {
+        return new Spaceship(getId(), getStyle(), getSize(), getPosition(), getDirection(), speed, getRotationDegrees(), getDamage(), getInitialHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired, playerId);
+    }
+
+    public Spaceship setRotationDegrees(double rotationDegrees) {
+        return new Spaceship(getId(), getStyle(), getSize(), getPosition(), getDirection(), getSpeed(), rotationDegrees, getDamage(), getInitialHealth(), isVisible(), pointsWhenDestroyed, bulletsPerShot, shotsFired, playerId);
+    }
+
+    public Spaceship setVisible(boolean visible) {
+        return new Spaceship(getId(), getStyle(), getSize(), getPosition(), getDirection(), getSpeed(), getRotationDegrees(), getDamage(), getInitialHealth(), visible, pointsWhenDestroyed, bulletsPerShot, shotsFired, playerId);
     }
 
     public int getPointsWhenDestroyed() {
