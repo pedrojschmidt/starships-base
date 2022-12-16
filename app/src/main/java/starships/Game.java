@@ -58,41 +58,58 @@ public class Game {
         if (!isPaused){
             if (objects != null) {
                 AsteroidGenerator.generateAsteroids(objects, players);
-                List<GameObject> objectsAux = new ArrayList<>();
-                objectsAux.addAll(objects);
-                for (GameObject gameObject : objects){
+                for (int i = 0; i < objects.size(); i++) {
+                    GameObject gameObject = objects.get(i);
                     if (gameObject.getType() == ObjectType.SPACESHIP) {
                         Spaceship spaceship = (Spaceship) gameObject;
                         Spaceship newSpaceship = spaceship.update();
-
-                        objectsAux.remove(spaceship);
-                        objectsAux.add(newSpaceship);
-
+                        objects.set(i, newSpaceship);
                         Player owner = getPlayerBySpaceship(spaceship);
                         owner.setSpaceship(newSpaceship);
                     } else if (gameObject.getType() == ObjectType.BULLET){
                         Bullet bullet = (Bullet) gameObject;
-
-                        objectsAux.remove(bullet);
-                        objectsAux.add(bullet.update());
-
-                        List<Bullet> bulletsAux = new ArrayList<>();
-                        bulletsAux.addAll(bullets);
-                        bulletsAux.remove(bullet);
-                        bulletsAux.add(bullet);
+                        Bullet newBullet = bullet.update();
+                        objects.set(i, bullet.update());
+                        bullets.set(bullets.indexOf(bullet), newBullet);
                     } else if (gameObject.getType() == ObjectType.ASTEROID){
                         Asteroid asteroid = (Asteroid) gameObject;
-
-                        objectsAux.remove(asteroid);
-                        objectsAux.add(asteroid.update());
-
-                        List<Asteroid> asteroidsAux = new ArrayList<>();
-                        asteroidsAux.addAll(asteroids);
-                        asteroidsAux.remove(asteroid);
-                        asteroidsAux.add(asteroid);
+                        Asteroid newAsteroid = asteroid.update();
+                        objects.set(i, newAsteroid);
+                        asteroids.set(asteroids.indexOf(asteroid), newAsteroid);
                     }
                 }
-                objects = objectsAux;
+//                for (GameObject gameObject : objects){
+//                    if (gameObject.getType() == ObjectType.SPACESHIP) {
+//                        Spaceship spaceship = (Spaceship) gameObject;
+//                        Spaceship newSpaceship = spaceship.update();
+//
+//                        objectsAux.remove(spaceship);
+//                        objectsAux.add(newSpaceship);
+//
+//                        Player owner = getPlayerBySpaceship(spaceship);
+//                        owner.setSpaceship(newSpaceship);
+//                    } else if (gameObject.getType() == ObjectType.BULLET){
+//                        Bullet bullet = (Bullet) gameObject;
+//
+//                        objectsAux.remove(bullet);
+//                        objectsAux.add(bullet.update());
+//
+//                        List<Bullet> bulletsAux = new ArrayList<>();
+//                        bulletsAux.addAll(bullets);
+//                        bulletsAux.remove(bullet);
+//                        bulletsAux.add(bullet);
+//                    } else if (gameObject.getType() == ObjectType.ASTEROID){
+//                        Asteroid asteroid = (Asteroid) gameObject;
+//
+//                        objectsAux.remove(asteroid);
+//                        objectsAux.add(asteroid.update());
+//
+//                        List<Asteroid> asteroidsAux = new ArrayList<>();
+//                        asteroidsAux.addAll(asteroids);
+//                        asteroidsAux.remove(asteroid);
+//                        asteroidsAux.add(asteroid);
+//                    }
+//                }
             }
         }
     }
@@ -110,13 +127,15 @@ public class Game {
     public void moveShip(int spaceshipIndex, Vector direction){
         if (spaceshipIndex < objects.size() && objects.get(spaceshipIndex).getType() == ObjectType.SPACESHIP && !isPaused){
             Spaceship spaceship = (Spaceship) objects.get(spaceshipIndex);
-            spaceship.move(direction);
+            Player owner = getPlayerBySpaceship(spaceship);
+            owner.setSpaceship(spaceship.move(direction));
         }
     }
     public void rotateShip(int spaceshipIndex, double rotation){
         if (spaceshipIndex < objects.size() && objects.get(spaceshipIndex).getType() == ObjectType.SPACESHIP && !isPaused){
             Spaceship spaceship = (Spaceship) objects.get(spaceshipIndex);
-            spaceship.rotate(rotation);
+            Player owner = getPlayerBySpaceship(spaceship);
+            owner.setSpaceship(spaceship.rotate(rotation));
         }
     }
 
@@ -151,9 +170,9 @@ public class Game {
         for (int i = 1; i <= amount; i++) {
             Spaceship spaceship;
             if (i == 1) {
-                spaceship = new Spaceship("spaceship-" + i, configuration.getStyles().get("style-" + i), new ObjectSize(70, 70), new Vector(330, 350), new Vector(0, 1), 0, 180, 20, 100, true, 1000, 1, 0, "player-" + i);
+                spaceship = new Spaceship("spaceship-" + i, configuration.getStyles().get("style-" + i), new ObjectSize(70, 70), new Vector(330, 350), new Vector(0, 1), 0, 180, 20, 100, true, 100, 1000, 1, 0, "player-" + i);
             } else {
-                spaceship = new Spaceship("spaceship-" + i, configuration.getStyles().get("style-" + i), new ObjectSize(70, 70), new Vector(410, 350), new Vector(0, 1), 0, 180, 20, 100, true, 1000, 1, 0, "player-" + i);
+                spaceship = new Spaceship("spaceship-" + i, configuration.getStyles().get("style-" + i), new ObjectSize(70, 70), new Vector(410, 350), new Vector(0, 1), 0, 180, 20, 100, true, 100, 1000, 1, 0, "player-" + i);
             }
             players.add(new Player("player-" + i, 0, configuration.getLivesPerPlayer(), spaceship, true));
         }
