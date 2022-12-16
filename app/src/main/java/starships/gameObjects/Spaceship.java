@@ -23,7 +23,7 @@ public class Spaceship extends GameObject {
             double newX = getPosition().getX() +  getSpeed() * getDirection().getX();
             double newY = getPosition().getY() +  getSpeed() * getDirection().getY();
             //Solo se mueve dentro de la pantalla
-            if (newX < 750 && newX > 0 && newY < 800 && newY > 0) {
+            if (newX < 720 && newX > 0 && newY < 700 && newY > 0) {
                 setPosition(new Vector(newX, newY));
             }
 //            setSpeed(0); // esto hace que cuando suelto la tecla se deje de mover (si saco esta linea se sigue moviendo aunque suelte)
