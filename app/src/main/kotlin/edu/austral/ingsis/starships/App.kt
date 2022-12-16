@@ -40,6 +40,8 @@ class Starships() : Application() {
     override fun start(primaryStage: Stage) {
         val pane = gameScene()
         val menu = menu(primaryStage, pane)
+        facade.showCollider.value = false;
+        facade.showGrid.value = false;
 
         facade.timeListenable.addEventListener(TimeListener(facade.elements, game, this))
         facade.collisionsListenable.addEventListener(CollisionListener(game))

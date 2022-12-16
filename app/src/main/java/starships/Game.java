@@ -120,9 +120,12 @@ public class Game {
     public void createBullets(int amount){
         bullets = new ArrayList<>();
         for (int i = 1; i <= amount; i++) {
-            String id = "bullet-" + i;
             Spaceship spaceship = putInSpaceship(amount, configuration.getAmountOfPlayers(), i);
-            bullets.add(new Bullet(id, ObjectStyle.BULLET, new ObjectSize(50, 25), new Vector(-100, -100), new Vector(0, 0), 7, 0, 35, false, spaceship.getId()));
+            bullets.add(new Bullet("bullet-" + i, ObjectStyle.BULLET, new ObjectSize(40, 20), new Vector(-100, -100), new Vector(0, 0), 7, 0, 35, false, spaceship.getId()));
+            i++;
+            bullets.add(new Bullet("bullet-" + i, ObjectStyle.BULLET, new ObjectSize(50, 25), new Vector(-100, -100), new Vector(0, 0), 7, 0, 40, false, spaceship.getId()));
+            i++;
+            bullets.add(new Bullet("bullet-" + i, ObjectStyle.BULLET, new ObjectSize(60, 30), new Vector(-100, -100), new Vector(0, 0), 7, 0, 45, false, spaceship.getId()));
         }
     }
 
