@@ -58,26 +58,32 @@ public class Game {
         if (!isPaused){
             if (objects != null) {
                 AsteroidGenerator.generateAsteroids(objects, players);
+                List<GameObject> objectsAux = new ArrayList<>();
+                List<Bullet> bulletsAux = new ArrayList<>();
+                List<Asteroid> asteroidsAux = new ArrayList<>();
                 for (int i = 0; i < objects.size(); i++) {
                     GameObject gameObject = objects.get(i);
                     if (gameObject.getType() == ObjectType.SPACESHIP) {
                         Spaceship spaceship = (Spaceship) gameObject;
                         Spaceship newSpaceship = spaceship.update();
-                        objects.set(i, newSpaceship);
+                        objectsAux.add(newSpaceship);
                         Player owner = getPlayerBySpaceship(spaceship);
                         owner.setSpaceship(newSpaceship);
                     } else if (gameObject.getType() == ObjectType.BULLET){
                         Bullet bullet = (Bullet) gameObject;
                         Bullet newBullet = bullet.update();
-                        objects.set(i, bullet.update());
-                        bullets.set(bullets.indexOf(bullet), newBullet);
+                        objectsAux.add(newBullet);
+                        bulletsAux.add(newBullet);
                     } else if (gameObject.getType() == ObjectType.ASTEROID){
                         Asteroid asteroid = (Asteroid) gameObject;
                         Asteroid newAsteroid = asteroid.update();
-                        objects.set(i, newAsteroid);
-                        asteroids.set(asteroids.indexOf(asteroid), newAsteroid);
+                        objectsAux.add(newAsteroid);
+                        asteroidsAux.add(newAsteroid);
                     }
                 }
+                objects = objectsAux;
+                bullets = bulletsAux;
+                asteroids = asteroidsAux;
 //                for (GameObject gameObject : objects){
 //                    if (gameObject.getType() == ObjectType.SPACESHIP) {
 //                        Spaceship spaceship = (Spaceship) gameObject;
@@ -128,14 +134,18 @@ public class Game {
         if (spaceshipIndex < objects.size() && objects.get(spaceshipIndex).getType() == ObjectType.SPACESHIP && !isPaused){
             Spaceship spaceship = (Spaceship) objects.get(spaceshipIndex);
             Player owner = getPlayerBySpaceship(spaceship);
-            owner.setSpaceship(spaceship.move(direction));
+            Spaceship newSpaceship = spaceship.move(direction);
+            objects.set(objects.indexOf(spaceship), newSpaceship);
+            owner.setSpaceship(newSpaceship);
         }
     }
     public void rotateShip(int spaceshipIndex, double rotation){
         if (spaceshipIndex < objects.size() && objects.get(spaceshipIndex).getType() == ObjectType.SPACESHIP && !isPaused){
             Spaceship spaceship = (Spaceship) objects.get(spaceshipIndex);
             Player owner = getPlayerBySpaceship(spaceship);
-            owner.setSpaceship(spaceship.rotate(rotation));
+            Spaceship newSpaceship = spaceship.rotate(rotation);
+            objects.set(objects.indexOf(spaceship), newSpaceship);
+            owner.setSpaceship(newSpaceship);
         }
     }
 
@@ -146,7 +156,9 @@ public class Game {
                 if (gameObject.getType() == ObjectType.BULLET){
                     Bullet bullet = (Bullet) gameObject;
                     if (!bullet.isVisible() && Objects.equals(bullet.getSpaceshipId(), spaceship.getId())) {
-                        bullet.shoot(spaceship);
+                        Bullet newBullet = bullet.shoot(spaceship);
+                        objects.set(objects.indexOf(bullet), newBullet);
+                        bullets.set(bullets.indexOf(bullet), newBullet);
                         break;
                     }
                 }
