@@ -101,6 +101,8 @@ public class Collision {
     public void shipAsteroidCollision(){
         Spaceship spaceship;
         Asteroid asteroid;
+        Spaceship newSpaceship;
+        Asteroid newAsteroid;
         if (object1.getType() == ObjectType.SPACESHIP){
             spaceship = (Spaceship) object1;
             asteroid = (Asteroid) object2;
@@ -110,19 +112,23 @@ public class Collision {
             asteroid = (Asteroid) object1;
         }
         Player player = getPlayerFromPlayerId(spaceship.getPlayerId());
-        asteroid.setVisible(false);
-        spaceship.reduceHealth(asteroid.getDamage());
+        newAsteroid = asteroid.setVisible(false);
+        newSpaceship = spaceship.reduceHealth(asteroid.getDamage());
         if (spaceship.getActualHealth() < 0) {
             player.removeLife();
             if (player.getLives() > 0) {
-                spaceship.resetPosDirRotSpdHlth();
+                newSpaceship = newSpaceship.resetPosDirRotSpdHlth();
             }
         }
         if (player.getLives() <= 0){
             player.setAlive(false);
-            spaceship.setVisible(false);
-            spaceship.setPosition(new Vector(-100, -100)); // para que desaparezca
+            newSpaceship = newSpaceship.setVisible(false);
+            newSpaceship = newSpaceship.setPosition(new Vector(-100, -100)); // para que desaparezca
         }
+        game.updateObjects(newSpaceship, spaceship);
+        game.updateSpaceships(newSpaceship, spaceship);
+        game.updateObjects(newAsteroid, asteroid);
+        game.updateAsteroids(newAsteroid, asteroid);
     }
 
     private Player getPlayerFromPlayerId(String playerId){
