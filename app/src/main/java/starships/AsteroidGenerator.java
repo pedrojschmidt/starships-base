@@ -1,5 +1,6 @@
 package starships;
 
+import starships.gameObjects.Asteroid;
 import starships.gameObjects.Spaceship;
 
 import java.util.ArrayList;
@@ -8,18 +9,19 @@ import java.util.Random;
 
 public class AsteroidGenerator {
 
-    public static void generateAsteroids(List<GameObject> objects, List<Player> players){
-        if (getAsteroidsAmount(objects) < 7) {
-            for (GameObject gameObject: objects) {
+    public static void generateAsteroids(List<GameObject> objects, Game game, List<Player> players){
+        List<GameObject> aux = objects;
+        if (getAsteroidsAmount(aux) < 7) {
+            for (GameObject gameObject: aux) {
                 if (gameObject.getType().equals(ObjectType.ASTEROID) && !gameObject.isVisible()) {
-                    showMeteor(gameObject, getShips(players));
+                    showMeteor((Asteroid) gameObject, getShips(players), game);
                     break;
                 }
             }
         }
     }
 
-    public static void showMeteor(GameObject object, List<Spaceship> spaceships){
+    public static void showMeteor(Asteroid asteroid, List<Spaceship> spaceships, Game game){
         double x;
         double y;
         Vector direction;
@@ -65,11 +67,9 @@ public class AsteroidGenerator {
                 }
             }
         }
-        object = object.setPosition(new Vector(x, y));
-        object = object.setDirection(direction);
-        object = object.setSpeed(0.0015);
-        object = object.setVisible(true);
-        object = object.setActualHealth(object.getInitialHealth());
+        Asteroid newAsteroid = asteroid.setPosition(new Vector(x, y)).setDirection(direction).setSpeed(0.0015).setVisible(true).setActualHealth(asteroid.getInitialHealth());
+        game.updateObjects(newAsteroid, asteroid);
+        game.updateAsteroids(newAsteroid, asteroid);
     }
 
     public static List<Spaceship> getShips(List<Player> players){

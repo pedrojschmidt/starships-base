@@ -57,7 +57,7 @@ public class Game {
     public void update(){
         if (!isPaused){
             if (objects != null) {
-                AsteroidGenerator.generateAsteroids(objects, players);
+                AsteroidGenerator.generateAsteroids(objects, this, players);
                 List<GameObject> objectsAux = new ArrayList<>();
                 List<Bullet> bulletsAux = new ArrayList<>();
                 List<Asteroid> asteroidsAux = new ArrayList<>();
@@ -84,40 +84,28 @@ public class Game {
                 objects = objectsAux;
                 bullets = bulletsAux;
                 asteroids = asteroidsAux;
-//                for (GameObject gameObject : objects){
-//                    if (gameObject.getType() == ObjectType.SPACESHIP) {
-//                        Spaceship spaceship = (Spaceship) gameObject;
-//                        Spaceship newSpaceship = spaceship.update();
-//
-//                        objectsAux.remove(spaceship);
-//                        objectsAux.add(newSpaceship);
-//
-//                        Player owner = getPlayerBySpaceship(spaceship);
-//                        owner.setSpaceship(newSpaceship);
-//                    } else if (gameObject.getType() == ObjectType.BULLET){
-//                        Bullet bullet = (Bullet) gameObject;
-//
-//                        objectsAux.remove(bullet);
-//                        objectsAux.add(bullet.update());
-//
-//                        List<Bullet> bulletsAux = new ArrayList<>();
-//                        bulletsAux.addAll(bullets);
-//                        bulletsAux.remove(bullet);
-//                        bulletsAux.add(bullet);
-//                    } else if (gameObject.getType() == ObjectType.ASTEROID){
-//                        Asteroid asteroid = (Asteroid) gameObject;
-//
-//                        objectsAux.remove(asteroid);
-//                        objectsAux.add(asteroid.update());
-//
-//                        List<Asteroid> asteroidsAux = new ArrayList<>();
-//                        asteroidsAux.addAll(asteroids);
-//                        asteroidsAux.remove(asteroid);
-//                        asteroidsAux.add(asteroid);
-//                    }
-//                }
             }
         }
+    }
+
+    public void updateObjects(GameObject newObject, GameObject object){
+        int indexObjects = objects.indexOf(object);
+        objects.set(indexObjects, newObject);
+    }
+
+    public void updateBullets(Bullet newBullet, Bullet bullet){
+        int indexBullets = bullets.indexOf(bullet);
+        bullets.set(indexBullets, newBullet);
+    }
+
+    public void updateAsteroids(Asteroid newAsteroid, Asteroid asteroid){
+        int indexAsteroids = asteroids.indexOf(asteroid);
+        asteroids.set(indexAsteroids, newAsteroid);
+    }
+
+    public void updateSpaceships(Spaceship newSpaceship, Spaceship spaceship){
+        Player owner = getPlayerBySpaceship(spaceship);
+        owner.setSpaceship(newSpaceship);
     }
 
     public Player getPlayerBySpaceship(Spaceship spaceship){
@@ -222,11 +210,11 @@ public class Game {
         int amount = configuration.getAmountOfAsteroids();
         int amountPerSize = amount / 3;
         for (int i = 1; i <= amountPerSize; i++) {
-            asteroids.add(new Asteroid("asteroid-" + i, ObjectStyle.ASTEROID1, new ObjectSize(50, 50), new Vector(-100, -100), new Vector(1, -1), 0, 180, 20, 50, false, 1000));
+            asteroids.add(new Asteroid("asteroid-" + i, ObjectStyle.ASTEROID1, new ObjectSize(50, 50), new Vector(-100, -100), new Vector(1, -1), 0, 180, 20, 50, false, 50, 1000));
             i++;
-            asteroids.add(new Asteroid("asteroid-" + i, ObjectStyle.ASTEROID1, new ObjectSize(70, 70), new Vector(-100, -100), new Vector(1, -1), 0, 180, 40, 75, false, 2000));
+            asteroids.add(new Asteroid("asteroid-" + i, ObjectStyle.ASTEROID1, new ObjectSize(70, 70), new Vector(-100, -100), new Vector(1, -1), 0, 180, 40, 75, false, 75, 2000));
             i++;
-            asteroids.add(new Asteroid("asteroid-" + i, ObjectStyle.ASTEROID1, new ObjectSize(90, 90), new Vector(-100, -100), new Vector(1, -1), 0, 180, 60, 100, false, 3000));
+            asteroids.add(new Asteroid("asteroid-" + i, ObjectStyle.ASTEROID1, new ObjectSize(90, 90), new Vector(-100, -100), new Vector(1, -1), 0, 180, 60, 100, false, 100, 3000));
         }
     }
 
