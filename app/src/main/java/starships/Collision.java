@@ -13,26 +13,25 @@ public class Collision {
     private final GameObject object2;
     private final List<GameObject> objects;
     private final List<Player> players;
+    private Game game;
 
-    public Collision(GameObject object1, GameObject object2, List<GameObject> objects, List<Player> players) {
+    public Collision(GameObject object1, GameObject object2, List<GameObject> objects, List<Player> players, Game game) {
         this.object1 = object1;
         this.object2 = object2;
         this.objects = objects;
         this.players = players;
+        this.game = game;
         handleCollision();
     }
 
     public void handleCollision(){
         if ((object1.getType() == ObjectType.BULLET && object2.getType() == ObjectType.SPACESHIP) || (object2.getType() == ObjectType.BULLET && object1.getType() == ObjectType.SPACESHIP)){
-            //bullet and ship collision
             bulletShipCollision();
         }
         else if ((object1.getType() == ObjectType.BULLET && object2.getType() == ObjectType.ASTEROID) || (object2.getType() == ObjectType.BULLET && object1.getType() == ObjectType.ASTEROID)){
-            //bullet and meteor collision
             bulletAsteroidCollision();
         }
         else if ((object1.getType() == ObjectType.SPACESHIP && object2.getType() == ObjectType.ASTEROID) || (object2.getType() == ObjectType.SPACESHIP && object1.getType() == ObjectType.ASTEROID)){
-            //ship and meteor collision
             shipAsteroidCollision();
         }
     }
@@ -40,6 +39,8 @@ public class Collision {
     public void bulletShipCollision(){
         Bullet bullet;
         Spaceship spaceship;
+        Bullet newBullet;
+        Spaceship newSpaceship;
         if (object1.getType() == ObjectType.BULLET){
             bullet = (Bullet) object1;
             spaceship = (Spaceship) object2;
@@ -50,22 +51,25 @@ public class Collision {
         }
         if (Objects.equals(spaceship.getId(), bullet.getSpaceshipId())) return;
         Player player = getPlayerFromPlayerId(spaceship.getPlayerId());
-        bullet.setVisible(false);
-        bullet.setPosition(new Vector(-100, -100)); // para que desaparezca
-        spaceship.reduceHealth(bullet.getDamage());
+        newBullet = bullet.setVisible(false).setPosition(new Vector(-100, -100));
+        newSpaceship = spaceship.reduceHealth(bullet.getDamage()); // capaz hay que crearle un reduceHealth al Spaceship
         if (spaceship.getActualHealth() < 0) {
             Player player2 = getPlayerFromSpaceshipId(bullet.getSpaceshipId());
             player2.addPoints(spaceship.getPointsWhenDestroyed());
             player.removeLife();
             if (player.getLives() > 0) {
-                spaceship.resetPosDirRotSpdHlth();
+                newSpaceship = newSpaceship.resetPosDirRotSpdHlth();
             }
         }
         if (player.getLives() <= 0){
             player.setAlive(false);
-            spaceship.setVisible(false);
-            spaceship.setPosition(new Vector(-100, -100)); // para que desaparezca
+            newSpaceship = newSpaceship.setVisible(false);
+            newSpaceship = newSpaceship.setPosition(new Vector(-100, -100)); // para que desaparezca
         }
+        game.updateObjects(newBullet, bullet);
+        game.updateBullets(newBullet, bullet);
+        game.updateObjects(newSpaceship, spaceship);
+        game.updateSpaceships(newSpaceship, spaceship);
     }
 
     public void bulletAsteroidCollision(){

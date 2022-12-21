@@ -226,7 +226,7 @@ public class Game {
             if (gameObject.getId().equals(id2)) object2 = gameObject;
         }
         if (object1 != null && object2 != null && object1.isVisible() && object2.isVisible()){
-            Collision collision = new Collision(object1, object2, objects, players);
+            Collision collision = new Collision(object1, object2, objects, players, this);
         }
     }
 

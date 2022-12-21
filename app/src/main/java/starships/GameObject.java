@@ -41,8 +41,8 @@ public class GameObject {
         return new Double[]{position.getX(), position.getY(), rotationDegrees, size.getHeight(), size.getWidth()};
     }
 
-    public void reduceHealth(double amount){
-        setActualHealth(actualHealth -amount);
+    public GameObject reduceHealth(double amount){
+        return new GameObject(id, type, style, shape, size, position, direction, speed, rotationDegrees, damage, initialHealth, isVisible, actualHealth -amount);
     }
 
     public boolean isInBounds(){
