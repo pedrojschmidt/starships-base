@@ -32,6 +32,10 @@ public class Asteroid extends GameObject {
         return new Asteroid(getId(), getStyle(), getSize(), getPosition(), getDirection(), getSpeed(), getRotationDegrees(), getDamage(), getInitialHealth(), isVisible(), actualHealth, pointsWhenDestroyed);
     }
 
+    public Asteroid reduceHealth(double amount){
+        return new Asteroid(getId(), getStyle(), getSize(), getPosition(), getDirection(), getSpeed(), getRotationDegrees(), getDamage(), getInitialHealth(), isVisible(), getActualHealth()-amount, pointsWhenDestroyed);
+    }
+
     @Override
     public boolean isInBounds() {
         //lo cambio para que llegue a salir por completo de la pantalla

@@ -75,6 +75,8 @@ public class Collision {
     public void bulletAsteroidCollision(){
         Bullet bullet;
         Asteroid asteroid;
+        Bullet newBullet;
+        Asteroid newAsteroid;
         if (object1.getType() == ObjectType.BULLET){
             bullet = (Bullet) object1;
             asteroid = (Asteroid) object2;
@@ -84,13 +86,16 @@ public class Collision {
             asteroid = (Asteroid) object1;
         }
         Player player = getPlayerFromSpaceshipId(bullet.getSpaceshipId());
-        bullet.setVisible(false);
-        bullet.setPosition(new Vector(-100, -100)); // para que desaparezca
-        asteroid.reduceHealth(bullet.getDamage());
+        newBullet = bullet.setVisible(false).setPosition(new Vector(-100, -100));
+        newAsteroid = asteroid.reduceHealth(bullet.getDamage());
         if (asteroid.getActualHealth() < 0){
             player.addPoints(asteroid.getPointsWhenDestroyed());
-            asteroid.setVisible(false);
+            newAsteroid = newAsteroid.setVisible(false);
         }
+        game.updateObjects(newBullet, bullet);
+        game.updateBullets(newBullet, bullet);
+        game.updateObjects(newAsteroid, asteroid);
+        game.updateAsteroids(newAsteroid, asteroid);
     }
 
     public void shipAsteroidCollision(){
